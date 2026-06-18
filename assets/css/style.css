@@ -1,32 +1,30 @@
-/* Ibiff India - Premium Light-Themed Cinematic Design System */
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&family=Cinzel:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+/* Ibiff India - Ultra-Premium, Eye-Catching Light Cinematic Design System */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
 
 :root {
-    --primary-red: #C60202;
-    --primary-navy: #0A1D37;
+    --primary-red: #D60000;
+    --primary-navy: #031B33;
     --gold-solid: #C5A880;
-    --gold-light: #F4EAD4;
+    --gold-light: #F6EEDD;
     --gold-metallic: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
-    --dark-slate: #1A1A1A;
+    --dark-slate: #151515;
     --medium-grey: #666666;
-    --light-cream: #FAF8F5;
+    --light-cream: #FAF7F2;
     --white: #FFFFFF;
-    --border-color: #E6E2DA;
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.5);
+    --border-color: #E2DDD3;
+    --ticket-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body {
-    background-color: #FCFBF9;
+    background-color: #FDFCFB;
     color: var(--dark-slate);
     font-family: 'Poppins', sans-serif;
     line-height: 1.8;
     overflow-x: hidden;
-    letter-spacing: 0.2px;
 }
 
-/* Typography & Heading Styles */
+/* Typography & Headings */
 h1, h2, h3, .brand-text {
     font-family: 'Cinzel', serif;
     font-weight: 800;
@@ -53,7 +51,7 @@ h4, h5, h6, .nav-link, .btn-premium {
 }
 
 .text-gold {
-    color: #b8860b !important;
+    color: #c59b27 !important;
 }
 
 .text-red {
@@ -80,7 +78,7 @@ h4, h5, h6, .nav-link, .btn-premium {
 .film-reel-border {
     position: relative;
     height: 12px;
-    background: repeating-linear-gradient(90deg, #1A1A1A, #1A1A1A 12px, transparent 12px, transparent 24px);
+    background: repeating-linear-gradient(90deg, #151515, #151515 12px, transparent 12px, transparent 24px);
     width: 100%;
     opacity: 0.08;
     margin: 40px 0;
@@ -88,11 +86,11 @@ h4, h5, h6, .nav-link, .btn-premium {
 
 /* Navbar */
 .main-navbar {
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.96) !important;
     backdrop-filter: blur(15px);
     border-bottom: 2px solid var(--gold-solid);
-    padding: 18px 0;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    padding: 15px 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
 }
 
 .navbar-brand .brand-text {
@@ -138,7 +136,7 @@ h4, h5, h6, .nav-link, .btn-premium {
     color: var(--primary-red) !important;
 }
 
-/* Buttons */
+/* Buttons & Pulse effect */
 .btn-premium {
     padding: 15px 35px;
     font-weight: 800;
@@ -162,7 +160,23 @@ h4, h5, h6, .nav-link, .btn-premium {
     color: var(--white);
     border-color: var(--primary-navy);
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(198, 2, 2, 0.25);
+    box-shadow: 0 10px 25px rgba(214, 0, 0, 0.25);
+}
+
+.btn-pulse {
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(214, 0, 0, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(214, 0, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(214, 0, 0, 0);
+    }
 }
 
 .btn-navy {
@@ -176,7 +190,7 @@ h4, h5, h6, .nav-link, .btn-premium {
     color: var(--white);
     border-color: var(--primary-red);
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(10, 29, 55, 0.2);
+    box-shadow: 0 10px 25px rgba(3, 27, 51, 0.2);
 }
 
 .btn-outline-navy {
@@ -203,37 +217,50 @@ h4, h5, h6, .nav-link, .btn-premium {
     transform: translateY(-3px);
 }
 
-/* Landing Section */
-.landing-section {
-    padding-top: 150px;
-    padding-bottom: 100px;
-    background: radial-gradient(circle at 10% 20%, rgba(244, 234, 212, 0.3) 0%, transparent 40%), var(--white);
+/* TOP WELCOME BANNER (Precision IKSFF style replica) */
+.top-welcome-banner {
+    padding-top: 140px;
+    padding-bottom: 40px;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
     position: relative;
+    overflow: hidden;
 }
 
-.landing-section::before {
+.top-welcome-banner::before {
     content: '';
     position: absolute;
-    top: 10%;
-    right: 0;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(198, 2, 2, 0.03) 0%, transparent 70%);
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: repeating-linear-gradient(90deg, #151515, #151515 8px, #fff 8px, #fff 16px);
+    opacity: 0.8;
 }
 
-.welcome-title-large {
-    font-size: 3.2rem;
+.top-welcome-title {
+    font-size: 2.5rem;
     font-weight: 900;
-    line-height: 1.1;
     color: var(--primary-navy);
+    line-height: 1.25;
+}
+
+.top-welcome-title .red {
+    color: var(--primary-red);
+}
+
+/* Main Landing Section */
+.landing-section {
+    padding-top: 50px;
+    padding-bottom: 100px;
+    background: radial-gradient(circle at 10% 20%, rgba(246, 238, 221, 0.4) 0%, transparent 40%), var(--white);
 }
 
 .welcome-list li {
     font-size: 1.05rem;
     font-weight: 600;
     margin-bottom: 15px;
-    padding-left: 30px;
+    padding-left: 35px;
     position: relative;
     color: var(--dark-slate);
 }
@@ -241,11 +268,11 @@ h4, h5, h6, .nav-link, .btn-premium {
 .welcome-list li::before {
     content: '✦';
     position: absolute;
-    left: 0;
+    left: 10px;
     background: var(--gold-metallic);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
 /* Double Golden Frame Poster */
@@ -253,7 +280,7 @@ h4, h5, h6, .nav-link, .btn-premium {
     background: var(--white);
     padding: 30px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.04);
     border-radius: 12px;
     position: relative;
 }
@@ -261,23 +288,17 @@ h4, h5, h6, .nav-link, .btn-premium {
 .welcome-poster-section::after {
     content: '';
     position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
     border: 1px solid transparent;
-    border-radius: 16px;
+    border-radius: 18px;
     background: var(--gold-metallic) border-box;
     -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
-    opacity: 0.3;
-}
-
-.welcome-poster-section h3 {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--primary-navy);
+    opacity: 0.4;
 }
 
 .poster-container {
@@ -309,8 +330,8 @@ h4, h5, h6, .nav-link, .btn-premium {
 }
 
 .highlight-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(230, 226, 218, 0.8);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(230, 226, 218, 0.9);
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
     transition: var(--transition);
@@ -330,7 +351,7 @@ h4, h5, h6, .nav-link, .btn-premium {
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
-    background: linear-gradient(135deg, rgba(198,2,2,0.08) 0%, rgba(10,29,55,0.08) 100%);
+    background: linear-gradient(135deg, rgba(214,0,0,0.08) 0%, rgba(3,27,51,0.08) 100%);
     border: 1px solid var(--gold-solid);
     color: var(--primary-navy);
 }
@@ -356,7 +377,7 @@ h4, h5, h6, .nav-link, .btn-premium {
     font-family: 'Barlow', sans-serif;
     font-weight: 700;
     font-size: 0.75rem;
-    background: rgba(10, 29, 55, 0.04);
+    background: rgba(3, 27, 51, 0.04);
     border: 1px solid var(--border-color);
     color: var(--primary-navy);
     transition: var(--transition);
@@ -459,105 +480,163 @@ h4, h5, h6, .nav-link, .btn-premium {
     border-color: var(--primary-red);
 }
 
-/* Featured Film Cards (Interactive Movie Look) */
+/* FILM TICKET SELECTION CARDS (Fully Eye-Catching Cinema Design) */
 .laurels-header-icon {
     width: 180px;
     height: auto;
     filter: drop-shadow(0 4px 10px rgba(185, 137, 40, 0.2));
 }
 
-.film-card-premium {
+.film-card-ticket {
+    background-color: var(--white);
+    background-image: 
+        radial-gradient(circle at 0% 50%, transparent 15px, var(--white) 15px),
+        radial-gradient(circle at 100% 50%, transparent 15px, var(--white) 15px);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--ticket-shadow);
+    padding: 20px;
+    transition: var(--transition);
     position: relative;
-    height: 440px;
     overflow: hidden;
-    background: var(--dark-slate);
-    border: 1px solid var(--gold-solid);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
 }
 
-.film-card-premium img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.95;
+.film-card-ticket::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    pointer-events: none;
     transition: var(--transition);
 }
 
-.film-card-premium::before {
+.film-card-ticket:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--primary-red);
+    box-shadow: 0 20px 40px rgba(214, 0, 0, 0.06);
+}
+
+.film-card-ticket:hover::after {
+    border-color: rgba(214, 0, 0, 0.2);
+}
+
+.ticket-image-wrapper {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 300px;
+    border: 1px solid var(--border-color);
+}
+
+.ticket-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.ticket-image-wrapper::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(10,29,55,0.4) 0%, rgba(10,29,55,0.9) 100%);
+    background: linear-gradient(to bottom, transparent 40%, rgba(3, 27, 51, 0.8) 100%);
     z-index: 1;
-    opacity: 0.8;
-    transition: var(--transition);
 }
 
-.film-card-premium:hover::before {
-    opacity: 0.95;
+.film-card-ticket:hover .ticket-image-wrapper img {
+    transform: scale(1.06);
 }
 
-.film-card-premium:hover img {
-    transform: scale(1.08);
+.ticket-info-stub {
+    padding-top: 20px;
+    border-top: 2px dashed var(--border-color);
+    margin-top: 15px;
+    position: relative;
 }
 
-.film-card-info {
+/* Punch hole circles decorations */
+.ticket-info-stub::before, .ticket-info-stub::after {
+    content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 30px;
+    top: -10px;
+    width: 18px;
+    height: 18px;
+    background-color: #FDFCFB; /* matches body bg */
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
     z-index: 2;
-    transform: translateY(15px);
+}
+
+.ticket-info-stub::before {
+    left: -29px;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    transform: rotate(45deg);
+}
+
+.ticket-info-stub::after {
+    right: -29px;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    transform: rotate(45deg);
+}
+
+.film-card-ticket:hover .ticket-info-stub::before,
+.film-card-ticket:hover .ticket-info-stub::after {
+    border-color: var(--primary-red);
+}
+
+.ticket-info-stub h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--primary-navy);
+    margin-bottom: 5px;
     transition: var(--transition);
 }
 
-.film-card-premium:hover .film-card-info {
-    transform: translateY(0);
+.film-card-ticket:hover .ticket-info-stub h4 {
+    color: var(--primary-red);
 }
 
-.film-card-info h4 {
-    font-size: 1.4rem;
+.ticket-rating {
+    font-family: 'Barlow', sans-serif;
+    color: #b8860b;
     font-weight: 800;
-    color: var(--white);
-    margin-bottom: 5px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.film-rating {
-    color: #FFD700;
     font-size: 0.85rem;
-    margin-bottom: 8px;
-    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
-.play-hover-btn {
+.play-hover-btn-ticket {
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.6);
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
     background: var(--white);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--primary-red);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     z-index: 3;
     opacity: 0;
-    box-shadow: 0 10px 25px rgba(198, 2, 2, 0.4);
+    box-shadow: 0 10px 20px rgba(214, 0, 0, 0.3);
     transition: var(--transition);
 }
 
-.film-card-premium:hover .play-hover-btn {
+.film-card-ticket:hover .play-hover-btn-ticket {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
 }
@@ -630,13 +709,13 @@ h4, h5, h6, .nav-link, .btn-premium {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(10,29,55,0.92) 0%, rgba(198,2,2,0.85) 100%);
+    background: linear-gradient(135deg, rgba(3,27,51,0.92) 0%, rgba(214,0,0,0.85) 100%);
     z-index: 1;
 }
 
 /* Footer (Dark Premium Cinematic Navy) */
 .footer {
-    background-color: #050E1A;
+    background-color: #030F1C;
     color: rgba(255, 255, 255, 0.7);
     padding: 90px 0 35px;
     border-top: 4px solid var(--gold-solid);

@@ -29,26 +29,34 @@ if ($db) {
 }
 ?>
 
-<!-- Main Landing Section (Two-Column Precision Replica) -->
+<!-- Top Welcome Banner Section (Precision IKSFF layout replica) -->
+<section class="top-welcome-banner text-center">
+    <div class="container" data-aos="fade-down">
+        <h1 class="top-welcome-title font-cinzel text-uppercase">
+            Welcome to <span class="red">THE INTERNATIONAL</span> INDO-BANGLA FILM FESTIVAL <span class="red">| IBIFF INDIA</span>
+        </h1>
+        <div class="separator-line centered"></div>
+    </div>
+</section>
+
+<!-- Main Landing Section -->
 <section class="landing-section">
     <div class="container">
         <div class="row align-items-stretch">
             <!-- Left Column: Content -->
             <div class="col-lg-7 pe-lg-5" data-aos="fade-right">
-                <h1 class="welcome-title-large text-uppercase font-cinzel">
-                    <span class="text-red">THE INTERNATIONAL</span><br>
-                    <span class="text-navy">INDO-BANGLA FILM FESTIVAL</span><br>
-                    <span class="text-red">IBIFF INDIA</span>
-                </h1>
+                <h2 class="welcome-title-large text-uppercase font-cinzel text-gradient-navy">
+                    CELEBRATING CROSS-BORDER CINEMA
+                </h2>
                 
                 <div class="separator-line"></div>
                 
-                <h5 class="text-red fw-bold mb-4 font-barlow" style="letter-spacing: 1px;">
+                <h5 class="text-red fw-bold mb-4 font-barlow" style="letter-spacing: 1.5px; font-size: 1.1rem;">
                     <?php echo htmlspecialchars(getSetting('welcome_subheading', '8th International Indo-Bangla Film Festival (IBIFF) 2026!')); ?>
                 </h5>
                 
                 <div class="welcome-desc-block mb-4">
-                    <p class="text-muted" style="font-size: 1.05rem;">
+                    <p class="text-muted" style="font-size: 1.05rem; line-height: 1.8;">
                         <?php echo nl2br(htmlspecialchars(getSetting('welcome_text'))); ?>
                     </p>
                 </div>
@@ -57,26 +65,27 @@ if ($db) {
                 <div class="separator-line" style="width: 100%; height: 1px; background-color: var(--border-color); margin: 30px 0;"></div>
                 
                 <!-- Festival Committee Info -->
-                <div class="committee-info mb-4 bg-light p-4 border rounded">
-                    <h5 class="fw-bold text-navy mb-3 border-bottom pb-2 font-cinzel" style="font-size: 1.1rem; letter-spacing: 0.5px;">FESTIVAL MANAGEMENT</h5>
-                    <p class="mb-2 text-dark d-flex justify-content-between">
-                        <span class="fw-bold text-navy"><i class="fas fa-user-tie me-2 text-red"></i> Festival Chairman:</span> 
-                        <span class="text-red font-barlow fw-bold">Sourav Chakraborty</span>
+                <div class="committee-info mb-4 bg-light p-4 border rounded shadow-sm position-relative overflow-hidden">
+                    <div style="position: absolute; right: -20px; bottom: -20px; font-size: 8rem; color: rgba(3,27,51,0.02); pointer-events: none; font-family: 'Cinzel', serif;">IBIFF</div>
+                    <h5 class="fw-bold text-navy mb-3 border-bottom pb-2 font-cinzel" style="font-size: 1.15rem; letter-spacing: 0.5px;">FESTIVAL MANAGEMENT</h5>
+                    <p class="mb-2 text-dark d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-user-tie me-2 text-red"></i> <strong class="text-navy">Festival Chairman:</strong></span> 
+                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;">Sourav Chakraborty</span>
                     </p>
-                    <p class="mb-2 text-dark d-flex justify-content-between">
-                        <span class="fw-bold text-navy"><i class="fas fa-user me-2 text-red"></i> Festival Director:</span> 
-                        <span class="text-red font-barlow fw-bold">Raju Biswas</span>
+                    <p class="mb-2 text-dark d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-user me-2 text-red"></i> <strong class="text-navy">Festival Director:</strong></span> 
+                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;">Raju Biswas</span>
                     </p>
-                    <p class="mb-2 text-dark d-flex justify-content-between">
-                        <span class="fw-bold text-navy"><i class="fas fa-award me-2 text-red"></i> Chief Advisor:</span> 
-                        <span class="text-red font-barlow fw-bold">Dr. Amit Chaudhuri</span>
+                    <p class="mb-2 text-dark d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-award me-2 text-red"></i> <strong class="text-navy">Chief Advisor:</strong></span> 
+                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;">Dr. Amit Chaudhuri</span>
                     </p>
                 </div>
 
                 <div class="separator-line" style="width: 100%; height: 1px; background-color: var(--border-color); margin: 30px 0;"></div>
 
                 <!-- Why Submit list -->
-                <h5 class="fw-bold text-navy mb-3 font-cinzel" style="font-size: 1.1rem; letter-spacing: 0.5px;">Why be a part of IBIFF 2026?</h5>
+                <h5 class="fw-bold text-navy mb-3 font-cinzel text-uppercase" style="font-size: 1.1rem; letter-spacing: 0.5px;">Why submit your film?</h5>
                 <ul class="list-unstyled welcome-list mb-5">
                     <?php for ($i = 1; $i <= 4; $i++): 
                         $bullet = getSetting("welcome_bullet_$i");
@@ -87,7 +96,7 @@ if ($db) {
                 </ul>
                 
                 <div class="cta-actions">
-                    <a href="<?php echo htmlspecialchars(getSetting('hero_cta_url_2', 'https://filmfreeway.com')); ?>" target="_blank" class="btn btn-premium btn-red px-5 py-3 fw-bold shadow">
+                    <a href="<?php echo htmlspecialchars(getSetting('hero_cta_url_2', 'https://filmfreeway.com')); ?>" target="_blank" class="btn btn-premium btn-red btn-pulse px-5 py-3 fw-bold shadow">
                         <i class="fab fa-wpforms me-2"></i> SUBMIT YOUR FILM
                     </a>
                 </div>
@@ -95,8 +104,8 @@ if ($db) {
             
             <!-- Right Column: Poster Card -->
             <div class="col-lg-5 mt-5 mt-lg-0" data-aos="fade-left">
-                <div class="welcome-poster-section d-flex flex-column justify-content-between h-100">
-                    <h3 class="text-navy fw-bold border-bottom pb-3 mb-4 text-center text-uppercase font-cinzel" style="font-size: 1.3rem;">
+                <div class="welcome-poster-section d-flex flex-column justify-content-between h-100 shadow-lg">
+                    <h3 class="text-navy fw-bold border-bottom pb-3 mb-4 text-center text-uppercase font-cinzel" style="font-size: 1.35rem; letter-spacing: 1px;">
                         <?php echo htmlspecialchars(getSetting('welcome_poster_title', 'IBIFF 2026 EDITION')); ?>
                     </h3>
                     <div class="poster-container overflow-hidden mb-4 rounded shadow-sm">
@@ -122,8 +131,8 @@ if ($db) {
 <section class="highlights-overview-section py-large">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-heading text-navy text-uppercase font-cinzel" style="font-size: 2.3rem;">
-                INTERNATIONAL INDO-BANGLA FILM FESTIVAL 2026
+            <h2 class="section-heading text-navy text-uppercase font-cinzel" style="font-size: 2.3rem; letter-spacing: 1.5px;">
+                FESTIVAL OVERVIEW & KEY HIGHLIGHTS
             </h2>
             <div class="separator-line centered"></div>
         </div>
@@ -133,10 +142,10 @@ if ($db) {
             <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
                 <div class="highlight-card h-100 d-flex flex-column justify-content-between p-4">
                     <div class="card-top">
-                        <div class="card-icon rounded-circle mb-4">
+                        <div class="card-icon rounded-circle mb-4 shadow-sm">
                             <i class="fas fa-calendar-alt"></i>
                         </div>
-                        <h4 class="card-title fw-bold mb-3">
+                        <h4 class="card-title fw-bold mb-3 font-cinzel">
                             <?php echo htmlspecialchars(getSetting('highlights_dates_title', 'Festival Dates')); ?>
                         </h4>
                         <p class="card-desc text-muted mb-0">
@@ -155,10 +164,10 @@ if ($db) {
             <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
                 <div class="highlight-card h-100 d-flex flex-column justify-content-between p-4">
                     <div class="card-top">
-                        <div class="card-icon rounded-circle mb-4">
+                        <div class="card-icon rounded-circle mb-4 shadow-sm">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <h4 class="card-title fw-bold mb-3">
+                        <h4 class="card-title fw-bold mb-3 font-cinzel">
                             <?php echo htmlspecialchars(getSetting('highlights_venue_title', 'Physical Venues')); ?>
                         </h4>
                         <ul class="list-unstyled venue-list mb-0">
@@ -183,10 +192,10 @@ if ($db) {
             <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
                 <div class="highlight-card h-100 d-flex flex-column justify-content-between p-4">
                     <div class="card-top">
-                        <div class="card-icon rounded-circle mb-4">
+                        <div class="card-icon rounded-circle mb-4 shadow-sm">
                             <i class="fas fa-tv"></i>
                         </div>
-                        <h4 class="card-title fw-bold mb-3">
+                        <h4 class="card-title fw-bold mb-3 font-cinzel">
                             <?php echo htmlspecialchars(getSetting('highlights_online_title', 'Online Festival')); ?>
                         </h4>
                         <p class="card-desc text-muted mb-3">
@@ -212,10 +221,10 @@ if ($db) {
             <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
                 <div class="highlight-card h-100 d-flex flex-column justify-content-between p-4">
                     <div class="card-top">
-                        <div class="card-icon rounded-circle mb-4">
+                        <div class="card-icon rounded-circle mb-4 shadow-sm">
                             <i class="fas fa-photo-film"></i>
                         </div>
-                        <h4 class="card-title fw-bold mb-3">
+                        <h4 class="card-title fw-bold mb-3 font-cinzel">
                             <?php echo htmlspecialchars(getSetting('highlights_categories_title', 'Festival Categories')); ?>
                         </h4>
                         <div class="categories-tags d-flex flex-wrap gap-2">
@@ -301,7 +310,7 @@ if ($db) {
                     ?>
                 </h2>
                 <div class="separator-line"></div>
-                <p class="lead text-navy mb-4 fw-semibold">
+                <p class="lead text-navy mb-4 fw-semibold" style="font-size: 1.1rem;">
                     <?php echo htmlspecialchars(getSetting('mission_subtitle')); ?>
                 </p>
                 <p class="text-muted mb-4" style="font-size: 1.05rem;">
@@ -388,7 +397,7 @@ if ($db) {
     </div>
 </section>
 
-<!-- Laurels & Award Highlights Grid -->
+<!-- Laurels & Award Highlights Grid (Film Tickets Overhaul) -->
 <section class="py-large bg-light">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
@@ -404,64 +413,82 @@ if ($db) {
         
         <div class="row g-4">
             <?php if (empty($featuredFilms)): ?>
-                <!-- Fallback to placeholders if DB empty -->
-                <div class="col-md-3">
-                    <div class="film-card-premium rounded shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=800" alt="Film">
-                        <div class="play-hover-btn"><i class="fas fa-play"></i></div>
-                        <div class="film-card-info">
-                            <div class="film-rating"><i class="fas fa-star text-warning"></i> ★ 8.5/10</div>
-                            <span class="badge bg-danger mb-2 font-barlow">Drama</span>
-                            <h4>The Last Frame</h4>
+                <!-- Fallback to placeholder film tickets if DB empty -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="film-card-ticket">
+                        <div class="ticket-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=800" alt="Film">
+                            <div class="play-hover-btn-ticket"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="ticket-info-stub text-center">
+                            <div class="ticket-rating justify-content-center mb-2">
+                                <i class="fas fa-star text-warning"></i> ★ 8.5/10
+                            </div>
+                            <h4 class="font-cinzel text-uppercase text-navy text-truncate">The Last Frame</h4>
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1 font-barlow mt-2">Drama</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="film-card-premium rounded shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=800" alt="Film">
-                        <div class="play-hover-btn"><i class="fas fa-play"></i></div>
-                        <div class="film-card-info">
-                            <div class="film-rating"><i class="fas fa-star text-warning"></i> ★ 8.2/10</div>
-                            <span class="badge bg-danger mb-2 font-barlow">Documentary</span>
-                            <h4>Urban Pulse</h4>
+                <div class="col-md-6 col-lg-3">
+                    <div class="film-card-ticket">
+                        <div class="ticket-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=800" alt="Film">
+                            <div class="play-hover-btn-ticket"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="ticket-info-stub text-center">
+                            <div class="ticket-rating justify-content-center mb-2">
+                                <i class="fas fa-star text-warning"></i> ★ 8.2/10
+                            </div>
+                            <h4 class="font-cinzel text-uppercase text-navy text-truncate">Urban Pulse</h4>
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1 font-barlow mt-2">Documentary</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="film-card-premium rounded shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=800" alt="Film">
-                        <div class="play-hover-btn"><i class="fas fa-play"></i></div>
-                        <div class="film-card-info">
-                            <div class="film-rating"><i class="fas fa-star text-warning"></i> ★ 8.9/10</div>
-                            <span class="badge bg-danger mb-2 font-barlow">Short Film</span>
-                            <h4>Silent Echoes</h4>
+                <div class="col-md-6 col-lg-3">
+                    <div class="film-card-ticket">
+                        <div class="ticket-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=800" alt="Film">
+                            <div class="play-hover-btn-ticket"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="ticket-info-stub text-center">
+                            <div class="ticket-rating justify-content-center mb-2">
+                                <i class="fas fa-star text-warning"></i> ★ 8.9/10
+                            </div>
+                            <h4 class="font-cinzel text-uppercase text-navy text-truncate">Silent Echoes</h4>
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1 font-barlow mt-2">Short Film</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="film-card-premium rounded shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1514525253361-bee8718a300a?q=80&w=800" alt="Film">
-                        <div class="play-hover-btn"><i class="fas fa-play"></i></div>
-                        <div class="film-card-info">
-                            <div class="film-rating"><i class="fas fa-star text-warning"></i> ★ 7.8/10</div>
-                            <span class="badge bg-danger mb-2 font-barlow">Music Video</span>
-                            <h4>Neon Rhythms</h4>
+                <div class="col-md-6 col-lg-3">
+                    <div class="film-card-ticket">
+                        <div class="ticket-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1514525253361-bee8718a300a?q=80&w=800" alt="Film">
+                            <div class="play-hover-btn-ticket"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="ticket-info-stub text-center">
+                            <div class="ticket-rating justify-content-center mb-2">
+                                <i class="fas fa-star text-warning"></i> ★ 7.8/10
+                            </div>
+                            <h4 class="font-cinzel text-uppercase text-navy text-truncate">Neon Rhythms</h4>
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1 font-barlow mt-2">Music Video</span>
                         </div>
                     </div>
                 </div>
             <?php else: foreach($featuredFilms as $film): ?>
             <div class="col-md-6 col-lg-3" data-aos="zoom-in">
-                <a href="film-details.php?slug=<?php echo htmlspecialchars($film['slug']); ?>">
-                    <div class="film-card-premium rounded shadow-sm">
-                        <img src="<?php echo strpos($film['poster'], 'http') === 0 ? $film['poster'] : 'assets/uploads/posters/'.$film['poster']; ?>" 
-                             onerror="this.src='https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=800'" alt="<?php echo htmlspecialchars($film['title']); ?>">
-                        <div class="play-hover-btn"><i class="fas fa-play"></i></div>
-                        <div class="film-card-info">
-                            <div class="film-rating">
+                <a href="film-details.php?slug=<?php echo htmlspecialchars($film['slug']); ?>" class="text-decoration-none">
+                    <div class="film-card-ticket">
+                        <div class="ticket-image-wrapper">
+                            <img src="<?php echo strpos($film['poster'], 'http') === 0 ? $film['poster'] : 'assets/uploads/posters/'.$film['poster']; ?>" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=800'" alt="<?php echo htmlspecialchars($film['title']); ?>">
+                            <div class="play-hover-btn-ticket"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="ticket-info-stub text-center">
+                            <div class="ticket-rating justify-content-center mb-2">
                                 <i class="fas fa-star text-warning"></i> ★ <?php echo !empty($film['rating_score']) ? $film['rating_score'] : '8.2'; ?>/10
                             </div>
-                            <span class="badge bg-danger mb-2 font-barlow"><?php echo htmlspecialchars($film['genre']); ?></span>
-                            <h4><?php echo htmlspecialchars($film['title']); ?></h4>
+                            <h4 class="font-cinzel text-uppercase text-navy text-truncate"><?php echo htmlspecialchars($film['title']); ?></h4>
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1 font-barlow mt-2"><?php echo htmlspecialchars($film['genre']); ?></span>
                         </div>
                     </div>
                 </a>
@@ -603,7 +630,7 @@ if ($db) {
 .news-marquee-track {
     display: flex;
     align-items: center;
-    gap: 0px; /* Flush margins inside film reel */
+    gap: 0px;
 }
 @keyframes scrollNewsMarquee {
     0% { transform: translateX(0); }
