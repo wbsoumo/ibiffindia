@@ -4,23 +4,6 @@ require_once 'includes/header.php';
 require_once 'includes/navbar.php'; 
 require_once 'includes/db.php';
 
-// Fetch all dynamic settings
-$s = [];
-if ($db) {
-    try {
-        $stmt = $db->query("SELECT setting_key, setting_value FROM site_settings");
-        $s = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
-    } catch (PDOException $e) {
-        $s = [];
-    }
-}
-
-// Accessor helper
-function getSetting($key, $default = '') {
-    global $s;
-    return isset($s[$key]) ? $s[$key] : $default;
-}
-
 // Fetch Featured Films (Last 4)
 $featuredFilms = [];
 if ($db) {
