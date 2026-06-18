@@ -16,24 +16,38 @@ if ($db) {
         $featuredFilms = [];
     }
 }
+
+// Fetch Dynamic Homepage Media
+$homeMedia = ['slider' => [], 'moment' => [], 'partner' => []];
+if ($db) {
+    try {
+        $stmt = $db->query("SELECT * FROM homepage_media ORDER BY media_type, display_order ASC");
+        if ($stmt) {
+            $hMedia = $stmt->fetchAll();
+            foreach ($hMedia as $m) {
+                $homeMedia[$m['media_type']][] = $m;
+            }
+        }
+    } catch (Exception $e) {}
+}
 ?>
 
 <!-- Top Image Slider Section -->
 <section class="top-image-slider">
     <div class="swiper topHeroSlider">
         <div class="swiper-wrapper">
-            <!-- Slide 1 -->
-            <div class="swiper-slide">
-                <img src="<?php echo htmlspecialchars(getSetting('slider_img_1', 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920')); ?>" alt="Film Production Scene 1" class="img-fluid w-100 hero-slider-img">
-            </div>
-            <!-- Slide 2 -->
-            <div class="swiper-slide">
-                <img src="<?php echo htmlspecialchars(getSetting('slider_img_2', 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1920')); ?>" alt="Film Production Scene 2" class="img-fluid w-100 hero-slider-img">
-            </div>
-            <!-- Slide 3 -->
-            <div class="swiper-slide">
-                <img src="<?php echo htmlspecialchars(getSetting('slider_img_3', 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1920')); ?>" alt="Film Production Scene 3" class="img-fluid w-100 hero-slider-img">
-            </div>
+            <?php if (!empty($homeMedia['slider'])): ?>
+                <?php foreach ($homeMedia['slider'] as $idx => $slide): ?>
+                <div class="swiper-slide">
+                    <img src="<?php echo htmlspecialchars($slide['file_path']); ?>" alt="Slider Image <?php echo $idx+1; ?>" class="img-fluid w-100 hero-slider-img">
+                </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- Fallback Slide -->
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920" alt="Film Production Scene" class="img-fluid w-100 hero-slider-img">
+                </div>
+            <?php endif; ?>
         </div>
         <!-- Pagination & Navigation -->
         <div class="swiper-pagination"></div>
@@ -579,9 +593,10 @@ if ($db) {
             <div class="news-marquee-content">
                 <?php 
                 $newsImages = [];
-                for ($m=1; $m<=4; $m++) {
-                    $img = getSetting("moments_img_$m");
-                    if ($img) $newsImages[] = $img;
+                if (!empty($homeMedia['moment'])) {
+                    foreach ($homeMedia['moment'] as $m) {
+                        $newsImages[] = $m['file_path'];
+                    }
                 }
                 
                 if (!empty($newsImages)) {
@@ -616,9 +631,10 @@ if ($db) {
         <div class="marquee-content">
             <?php 
             $partners = [];
-            for ($i=1; $i<=6; $i++) {
-                $img = getSetting("partner_img_$i");
-                if ($img) $partners[] = $img;
+            if (!empty($homeMedia['partner'])) {
+                foreach ($homeMedia['partner'] as $p) {
+                    $partners[] = $p['file_path'];
+                }
             }
             if (empty($partners)) {
                 $partners = [

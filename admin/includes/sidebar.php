@@ -54,6 +54,13 @@
             <p>Website CMS</p>
           </a>
         </li>
+        
+        <li class="nav-item">
+          <a href="<?php echo $basePath; ?>homepage_media.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'homepage_media.php' ? 'active bg-gold' : ''; ?>">
+            <i class="nav-icon fas fa-photo-video"></i>
+            <p>Homepage Media</p>
+          </a>
+        </li>
 
       </ul>
     </nav>
