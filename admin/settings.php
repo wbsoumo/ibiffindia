@@ -71,8 +71,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Fetch all settings
 $settings = [];
 if ($db) {
-    $stmt = $db->query("SELECT * FROM site_settings ORDER BY setting_section, id");
-    $allSettings = $stmt->fetchAll();
+    try {
+        $stmt = $db->query("SELECT * FROM site_settings ORDER BY setting_section, id");
+        if ($stmt) {
+            $allSettings = $stmt->fetchAll();
+        } else {
+            throw new Exception("Table missing or query failed");
+        }
+    } catch (Exception $e) {
+        // Table probably doesn't exist, let's create it
+        $db->exec("CREATE TABLE IF NOT EXISTS site_settings (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            setting_key VARCHAR(100) NOT NULL UNIQUE,
+            setting_value TEXT,
+            setting_type ENUM('text', 'textarea', 'image') DEFAULT 'text',
+            setting_label VARCHAR(255),
+            setting_section VARCHAR(100) DEFAULT 'General'
+        )");
+        $allSettings = [];
+    }
     
     // Auto-seed if empty
     if (empty($allSettings)) {

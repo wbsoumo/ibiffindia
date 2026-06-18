@@ -7,8 +7,14 @@ require_once 'includes/db.php';
 // Fetch Featured Films (Last 4)
 $featuredFilms = [];
 if ($db) {
-    $stmt = $db->query("SELECT * FROM films ORDER BY created_at DESC LIMIT 4");
-    $featuredFilms = $stmt->fetchAll();
+    try {
+        $stmt = $db->query("SELECT * FROM films ORDER BY created_at DESC LIMIT 4");
+        if ($stmt) {
+            $featuredFilms = $stmt->fetchAll();
+        }
+    } catch (Exception $e) {
+        $featuredFilms = [];
+    }
 }
 ?>
 

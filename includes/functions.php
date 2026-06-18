@@ -69,8 +69,12 @@ function getSetting($key, $default = '') {
     if (!isset($site_settings_cache) && $db) {
         try {
             $stmt = $db->query("SELECT setting_key, setting_value FROM site_settings");
-            $site_settings_cache = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
-        } catch (PDOException $e) {
+            if ($stmt) {
+                $site_settings_cache = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+            } else {
+                $site_settings_cache = [];
+            }
+        } catch (Exception $e) {
             $site_settings_cache = [];
         }
     }
