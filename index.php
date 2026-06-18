@@ -621,17 +621,21 @@ if ($db) {
     <div class="marquee-container bg-light">
         <div class="marquee-content">
             <div class="marquee-track">
-                <img src="https://static.wixstatic.com/media/494556_b37a3b3f46f44d8583796d8e06f9d3b4~mv2.png" alt="Partner" class="partner-logo">
-                <img src="https://static.wixstatic.com/media/494556_8f3d6c1f1b6a4b1b8b8f3b8b8f3b8b8f~mv2.png" alt="Partner" class="partner-logo">
-                <img src="https://static.wixstatic.com/media/494556_7b8b8f3b8b8f3b8b8f3b8b8f3b8b8f3b~mv2.png" alt="Partner" class="partner-logo">
-                <img src="https://static.wixstatic.com/media/494556_3b8b8f3b8b8f3b8b8f3b8b8f3b8b8f3b~mv2.png" alt="Partner" class="partner-logo">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=SVF+Entertainment&font=montserrat" alt="SVF" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Hoichoi&font=montserrat" alt="Hoichoi" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Surinder+Films&font=montserrat" alt="Surinder Films" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Windows+Production&font=montserrat" alt="Windows Production" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Eskay+Movies&font=montserrat" alt="Eskay Movies" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Camellia+Films&font=montserrat" alt="Camellia Films" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
             </div>
             <!-- Duplicate content for smooth infinite scrolling -->
             <div class="marquee-track">
-                <img src="https://static.wixstatic.com/media/494556_b37a3b3f46f44d8583796d8e06f9d3b4~mv2.png" alt="Partner" class="partner-logo">
-                <img src="https://static.wixstatic.com/media/494556_8f3d6c1f1b6a4b1b8b8f3b8b8f3b8b8f~mv2.png" alt="Partner" class="partner-logo">
-                <img src="https://static.wixstatic.com/media/494556_7b8b8f3b8b8f3b8b8f3b8b8f3b8b8f3b~mv2.png" alt="Partner" class="partner-logo">
-                <img src="https://static.wixstatic.com/media/494556_3b8b8f3b8b8f3b8b8f3b8b8f3b8b8f3b~mv2.png" alt="Partner" class="partner-logo">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=SVF+Entertainment&font=montserrat" alt="SVF" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Hoichoi&font=montserrat" alt="Hoichoi" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Surinder+Films&font=montserrat" alt="Surinder Films" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Windows+Production&font=montserrat" alt="Windows Production" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Eskay+Movies&font=montserrat" alt="Eskay Movies" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Camellia+Films&font=montserrat" alt="Camellia Films" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
             </div>
         </div>
     </div>
