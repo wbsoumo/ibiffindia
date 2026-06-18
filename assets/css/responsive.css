@@ -1,4 +1,31 @@
 @media (max-width: 991.98px) {
+    /* Prevent Horizontal Scroll Globally */
+    html, body {
+        overflow-x: hidden !important;
+        position: relative;
+        width: 100vw;
+    }
+    
+    /* Enhance Mobile Header */
+    .main-navbar {
+        background: linear-gradient(135deg, var(--primary-navy) 0%, #0a2540 100%) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        border-bottom: 2px solid rgba(197, 168, 128, 0.2);
+    }
+    .brand-logo {
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    }
+    .navbar-toggler {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+        padding: 8px 12px;
+        transition: 0.3s ease;
+    }
+    .navbar-toggler:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 10px rgba(197, 168, 128, 0.3);
+    }
+
     .hero-title {
         font-size: 3.5rem;
     }
@@ -8,13 +35,14 @@
     }
     
     .navbar-collapse {
-        background: var(--black);
+        background: linear-gradient(180deg, var(--primary-navy) 0%, #050a12 100%);
         padding: 1rem;
-        border-radius: 8px;
-        margin-top: 1rem;
-        border: 1px solid var(--glass-border);
+        border-radius: 0 0 15px 15px;
+        margin-top: 15px;
+        border: 1px solid rgba(197, 168, 128, 0.1);
+        border-top: none;
         max-width: 100%;
-        overflow-x: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
     .navbar-nav {
@@ -23,13 +51,22 @@
     }
     
     .navbar-nav .nav-item {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 12px 0;
+        font-weight: 600;
+        letter-spacing: 1px;
     }
     
     .navbar-nav .nav-item .btn {
         width: 100%;
-        margin-top: 10px;
+        margin-top: 15px;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 15px rgba(214, 0, 0, 0.3);
     }
 
     .festival-poster-wrapper {
@@ -39,6 +76,15 @@
 }
 
 @media (max-width: 767.98px) {
+    .top-welcome-title {
+        font-size: 1.8rem !important;
+        line-height: 1.4;
+    }
+    
+    .welcome-title-large {
+        font-size: 2rem !important;
+    }
+
     .hero-title {
         font-size: 2.5rem;
     }
@@ -63,5 +109,9 @@
         width: 100%;
         margin-bottom: 15px;
         margin-right: 0 !important;
+    }
+    
+    .film-strip-wrapper {
+        padding: 0 10px;
     }
 }

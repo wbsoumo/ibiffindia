@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top main-navbar">
     <div class="container">
         <a class="navbar-brand" href="index.php">
-            <span class="brand-text text-white">IBIFF <span class="red">INDIA</span></span>
+            <img src="<?php echo htmlspecialchars($siteLogo); ?>" alt="IBIFF INDIA Logo" class="brand-logo me-2" height="60">
         </a>
         <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <i class="fas fa-bars" style="color: var(--light-cream); font-size: 1.5rem;"></i>
@@ -16,7 +16,7 @@
                 <li class="nav-item"><a class="nav-link" href="festivalinfo.php">Festival Info</a></li>
                 <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
                 <li class="nav-item ms-lg-3">
-                    <a class="btn btn-red px-4 py-2 fw-bold rounded-0" href="https://filmfreeway.com" target="_blank">SUBMIT FILM</a>
+                    <a class="btn btn-red px-4 py-2 fw-bold rounded-0" href="<?php echo htmlspecialchars(getSetting('submit_film_link', 'https://filmfreeway.com')); ?>" target="_blank">SUBMIT FILM</a>
                 </li>
             </ul>
         </div>

@@ -1,87 +1,58 @@
 <?php 
-require_once __DIR__ . '/../../includes/config.php';
-require_once __DIR__ . '/../../includes/db.php';
-require_once __DIR__ . '/../../includes/functions.php';
+require_once __DIR__ . '/init.php'; 
+
+// For links handling based on depth
+$basePath = (strpos($_SERVER['PHP_SELF'], '/films/') !== false || strpos($_SERVER['PHP_SELF'], '/gallery/') !== false || strpos($_SERVER['PHP_SELF'], '/festival/') !== false) ? '../' : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | <?php echo SITE_NAME; ?></title>
-    
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard | IBIFF INDIA</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom Admin Styles -->
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     
     <style>
-        :root {
-            --admin-black: #111111;
-            --admin-gold: #d4af37;
-            --sidebar-width: 260px;
-        }
-        
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-        }
-        
-        .sidebar {
-            width: var(--sidebar-width);
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: var(--admin-black);
-            color: white;
-            z-index: 1000;
-        }
-        
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 2rem;
-            min-height: 100vh;
-        }
-        
-        .sidebar .nav-link {
-            color: rgba(255, 255, 255, 0.7);
-            padding: 0.8rem 1.5rem;
-            border-left: 3px solid transparent;
-        }
-        
-        .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            color: var(--admin-gold);
-            background-color: rgba(255, 255, 255, 0.05);
-            border-left-color: var(--admin-gold);
-        }
-        
-        .sidebar .nav-link i {
-            width: 25px;
-        }
-        
-        .admin-card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-        
-        .admin-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .login-container {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--admin-black);
-        }
+        .gold { color: #d4af37; }
+        .btn-gold { background-color: #d4af37; color: #000; font-weight: bold; border: none; }
+        .btn-gold:hover { background-color: #f1c40f; }
+        .text-gold { color: #d4af37 !important; }
+        .bg-gold { background-color: #d4af37 !important; }
     </style>
 </head>
-<body>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="<?php echo $basePath; ?>../index.php" target="_blank" class="nav-link text-primary fw-bold"><i class="fas fa-external-link-alt mr-1"></i> View Live Site</a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link text-danger" href="<?php echo $basePath; ?>logout.php">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <?php require_once __DIR__ . '/sidebar.php'; ?>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">

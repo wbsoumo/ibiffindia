@@ -1,13 +1,22 @@
-<?php require_once 'includes/config.php'; ?>
+<?php 
+require_once __DIR__ . '/config.php'; 
+require_once __DIR__ . '/db.php'; 
+require_once __DIR__ . '/functions.php'; 
+
+$siteLogo = getSetting('site_logo', 'assets/images/logo.png');
+$siteFavicon = getSetting('site_favicon', 'assets/images/favicon.ico');
+$metaTitle = getSetting('meta_title', 'IBIFF INDIA | Indo-Bangla International Film Festival');
+$metaDesc = getSetting('meta_description', 'Ibiff India - Indo-Bangla International Film Festival. Celebrating cinematic excellence and cross-border storytelling.');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($pageTitle) ? $pageTitle . " | " . SITE_NAME : SITE_NAME; ?></title>
+    <title><?php echo isset($pageTitle) ? $pageTitle . " | " . SITE_NAME : $metaTitle; ?></title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Ibiff India - Indo-Bangla International Film Festival. Celebrating cinematic excellence and cross-border storytelling.">
+    <meta name="description" content="<?php echo htmlspecialchars($metaDesc); ?>">
     <meta name="keywords" content="Ibiff India, Film Festival, International Film Festival, Short Films, Documentaries, Cinema">
     
     <!-- Google Fonts -->
@@ -30,6 +39,6 @@
     <link rel="stylesheet" href="assets/css/responsive.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="icon" href="<?php echo htmlspecialchars($siteFavicon); ?>">
 </head>
 <body>

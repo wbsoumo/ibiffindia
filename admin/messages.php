@@ -1,40 +1,20 @@
 <?php 
 require_once 'includes/header.php';
 
-if (!isAdminLoggedIn()) {
-    redirect('login.php');
-}
+
 
 // Fetch Messages
 $stmt = $db->query("SELECT * FROM contact_messages ORDER BY created_at DESC");
 $messages = $stmt->fetchAll();
 ?>
 
-<div class="sidebar">
-    <div class="p-4 mb-3 border-bottom border-secondary border-opacity-25">
-        <h4 class="fw-bold mb-0">IBIFF <span class="gold">INDIA</span></h4>
-        <small class="text-muted">Admin Panel</small>
-    </div>
-    <nav class="nav flex-column">
-        <a class="nav-link" href="dashboard.php"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-        <a class="nav-link" href="films/index.php"><i class="fas fa-film me-2"></i> Manage Films</a>
-        <a class="nav-link" href="gallery/index.php"><i class="fas fa-images me-2"></i> Manage Gallery</a>
-        <a class="nav-link" href="festival/index.php"><i class="fas fa-calendar-alt me-2"></i> Festival Schedule</a>
-        <a class="nav-link active" href="messages.php"><i class="fas fa-envelope me-2"></i> Messages</a>
-        <a class="nav-link" href="settings.php"><i class="fas fa-cog me-2"></i> Settings</a>
-        <div class="mt-auto p-4">
-            <a class="btn btn-outline-danger btn-sm w-100" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
-        </div>
-    </nav>
-</div>
-
-<main class="main-content">
+<section class="content"><div class="container-fluid">
     <div class="mb-5">
         <h2 class="fw-bold">Contact Messages</h2>
         <p class="text-muted">View and manage inquiries from website visitors.</p>
     </div>
 
-    <div class="card admin-card border-0 shadow-sm">
+    <div class="card card border-0 shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -100,8 +80,5 @@ $messages = $stmt->fetchAll();
             </div>
         </div>
     </div>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div></section>
+<?php require_once 'includes/footer.php'; ?>

@@ -1,9 +1,7 @@
 <?php 
 require_once '../includes/header.php';
 
-if (!isAdminLoggedIn()) {
-    redirect('../login.php');
-}
+
 
 $gallery = [];
 if ($db) {
@@ -12,25 +10,7 @@ if ($db) {
 }
 ?>
 
-<div class="sidebar">
-    <div class="p-4 mb-3 border-bottom border-secondary border-opacity-25">
-        <h4 class="fw-bold mb-0">IBIFF <span class="gold">INDIA</span></h4>
-        <small class="text-muted">Admin Panel</small>
-    </div>
-    <nav class="nav flex-column">
-        <a class="nav-link" href="../dashboard.php"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-        <a class="nav-link" href="../films/index.php"><i class="fas fa-film me-2"></i> Manage Films</a>
-        <a class="nav-link active" href="index.php"><i class="fas fa-images me-2"></i> Manage Gallery</a>
-        <a class="nav-link" href="../festival/index.php"><i class="fas fa-calendar-alt me-2"></i> Festival Schedule</a>
-        <a class="nav-link" href="../messages.php"><i class="fas fa-envelope me-2"></i> Messages</a>
-        <a class="nav-link" href="../settings.php"><i class="fas fa-cog me-2"></i> Settings</a>
-        <div class="mt-auto p-4">
-            <a class="btn btn-outline-danger btn-sm w-100" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
-        </div>
-    </nav>
-</div>
-
-<main class="main-content">
+<section class="content"><div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Manage Gallery</h2>
         <a href="add.php" class="btn btn-gold"><i class="fas fa-upload me-2"></i> Upload Photo</a>
@@ -40,7 +20,7 @@ if ($db) {
         <div class="alert alert-success"><?php echo $msg; ?></div>
     <?php endif; ?>
 
-    <div class="card admin-card p-4">
+    <div class="card card p-4">
         <div class="row g-4">
             <?php if(empty($gallery)): ?>
                 <div class="col-12 text-center text-muted py-4">No photos found.</div>
@@ -60,8 +40,5 @@ if ($db) {
             <?php endforeach; endif; ?>
         </div>
     </div>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div></section>
+<?php require_once '../includes/footer.php'; ?>

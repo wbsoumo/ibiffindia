@@ -1,7 +1,5 @@
 <?php 
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/includes/init.php';
 
 if (isAdminLoggedIn()) {
     redirect('dashboard.php');
@@ -27,45 +25,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | <?php echo SITE_NAME; ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #0a0a0a; color: white; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
-        .login-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; width: 100%; max-width: 400px; padding: 2.5rem; }
-        .gold { color: #d4af37; }
-        .btn-gold { background-color: #d4af37; color: #000; font-weight: bold; }
-        .btn-gold:hover { background-color: #f1c40f; }
-        .form-control { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 0.8rem; }
-        .form-control:focus { background: rgba(0,0,0,0.5); border-color: #d4af37; color: white; box-shadow: none; }
-    </style>
-</head>
-<body>
-    <div class="login-card">
-        <div class="text-center mb-4">
-            <h2 class="fw-bold mb-1">IBIFF <span class="gold">INDIA</span></h2>
-            <p class="text-muted small text-uppercase">Admin Portal</p>
-        </div>
-        
-        <?php if($error): ?>
-            <div class="alert alert-danger py-2 small"><?php echo $error; ?></div>
-        <?php endif; ?>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Login | <?php echo SITE_NAME; ?></title>
 
-        <form method="POST">
-            <div class="mb-3">
-                <label class="form-label small text-muted">Username</label>
-                <input type="text" name="username" class="form-control" required autofocus>
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page" style="background-color: #343a40;">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="../index.php" class="text-white"><b>IBIFF</b> <span style="color:#d4af37; font-weight:bold;">INDIA</span></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body rounded">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+      <?php if($error): ?>
+          <div class="alert alert-danger py-2 small"><?php echo $error; ?></div>
+      <?php endif; ?>
+
+      <form method="post">
+        <div class="input-group mb-3">
+          <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
             </div>
-            <div class="mb-4">
-                <label class="form-label small text-muted">Password</label>
-                <input type="password" name="password" class="form-control" required>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" name="password" class="form-control" placeholder="Password" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
             </div>
-            <button type="submit" class="btn btn-gold w-100 py-2">Login to Dashboard</button>
-        </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-block" style="background-color:#d4af37; color:black; font-weight:bold;">Sign In to Dashboard</button>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 </body>
 </html>

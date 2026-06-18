@@ -58,4 +58,23 @@ function getFlash($key) {
     }
     return null;
 }
+
+/**
+ * Get dynamic site setting
+ */
+function getSetting($key, $default = '') {
+    global $db, $site_settings_cache;
+    
+    // Cache settings to avoid multiple DB calls
+    if (!isset($site_settings_cache) && $db) {
+        try {
+            $stmt = $db->query("SELECT setting_key, setting_value FROM site_settings");
+            $site_settings_cache = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        } catch (PDOException $e) {
+            $site_settings_cache = [];
+        }
+    }
+    
+    return isset($site_settings_cache[$key]) ? $site_settings_cache[$key] : $default;
+}
 ?>

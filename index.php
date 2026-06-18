@@ -35,15 +35,15 @@ if ($db) {
         <div class="swiper-wrapper">
             <!-- Slide 1 -->
             <div class="swiper-slide">
-                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920" alt="Film Production Scene 1" class="img-fluid w-100 hero-slider-img">
+                <img src="<?php echo htmlspecialchars(getSetting('slider_img_1', 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920')); ?>" alt="Film Production Scene 1" class="img-fluid w-100 hero-slider-img">
             </div>
             <!-- Slide 2 -->
             <div class="swiper-slide">
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1920" alt="Film Production Scene 2" class="img-fluid w-100 hero-slider-img">
+                <img src="<?php echo htmlspecialchars(getSetting('slider_img_2', 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1920')); ?>" alt="Film Production Scene 2" class="img-fluid w-100 hero-slider-img">
             </div>
             <!-- Slide 3 -->
             <div class="swiper-slide">
-                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1920" alt="Film Production Scene 3" class="img-fluid w-100 hero-slider-img">
+                <img src="<?php echo htmlspecialchars(getSetting('slider_img_3', 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1920')); ?>" alt="Film Production Scene 3" class="img-fluid w-100 hero-slider-img">
             </div>
         </div>
         <!-- Pagination & Navigation -->
@@ -315,17 +315,17 @@ if ($db) {
 <section class="py-5 bg-white">
     <div class="container overflow-hidden">
         <div class="row g-5 align-items-center">
-            <div class="col-lg-5" data-aos="fade-right">
-                <div class="position-relative">
-                    <img src="<?php echo htmlspecialchars(getSetting('mission_image', 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=800')); ?>" alt="IBIFF Mission" class="img-fluid rounded shadow-lg w-100" style="object-fit: cover; min-height: 450px;">
+            <div class="col-lg-5 text-center text-lg-start" data-aos="fade-right">
+                <div class="position-relative d-inline-block w-100">
+                    <img src="<?php echo htmlspecialchars(getSetting('mission_image', 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=800')); ?>" alt="IBIFF Mission" class="img-fluid rounded shadow-lg w-100" style="object-fit: cover; min-height: 350px; max-height: 500px;">
                     <div class="position-absolute bottom-0 end-0 bg-white p-3 shadow-sm rounded-start mb-4 d-none d-md-block" style="transform: translateX(10%);">
                         <h4 class="font-cinzel text-navy mb-0">10+ Years</h4>
                         <p class="small text-muted mb-0">Of Cinematic Excellence</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-7 px-lg-5" data-aos="fade-left">
-                <span class="section-tag text-muted"><?php echo htmlspecialchars(getSetting('mission_tag', 'Our Vision')); ?></span>
+            <div class="col-lg-7 px-lg-5 mt-5 mt-lg-0 text-center text-lg-start" data-aos="fade-left">
+                <span class="section-tag text-muted mx-auto mx-lg-0"><?php echo htmlspecialchars(getSetting('mission_tag', 'Our Vision')); ?></span>
                 <h2 class="section-heading text-navy font-cinzel mb-4">
                     <?php 
                     $missionTitle = getSetting('mission_title', 'BRIDGING CULTURES THROUGH CINEMA');
@@ -339,36 +339,36 @@ if ($db) {
                     }
                     ?>
                 </h2>
-                <div class="separator-line mb-4"></div>
+                <div class="separator-line mb-4 mx-auto mx-lg-0"></div>
                 <p class="lead text-navy mb-3 fw-semibold">
-                    <?php echo htmlspecialchars(getSetting('mission_subtitle', 'Uniting filmmakers and audiences from across the globe.')); ?>
+                    <?php echo htmlspecialchars(getSetting('mission_subtitle', 'Uniting filmmakers, storytellers, and diverse audiences from across the globe under one roof.')); ?>
                 </p>
-                <p class="text-muted mb-4">
-                    <?php echo nl2br(htmlspecialchars(getSetting('mission_text', "The International Indo-Bangla Film Festival (IBIFF) is a premier platform dedicated to showcasing the finest independent cinema. Our mission is to foster cross-cultural dialogue through the universal language of film. We provide an unparalleled opportunity for visionary storytellers to present their work to an international audience, critics, and industry professionals. Join us in celebrating the magic of cinema and the powerful stories that connect us all."))); ?>
+                <p class="text-muted mb-4" style="line-height: 1.8;">
+                    <?php echo nl2br(htmlspecialchars(getSetting('mission_text', "The International Indo-Bangla Film Festival (IBIFF) is a premier platform dedicated to showcasing the finest independent cinema. Our core mission is to foster cross-cultural dialogue through the universal language of film, transcending borders and connecting human experiences. \n\nWe provide an unparalleled opportunity for visionary storytellers to present their work to an international audience, seasoned critics, and leading industry professionals. Join us in celebrating the magic of cinema and the powerful stories that inspire, challenge, and connect us all."))); ?>
                 </p>
-                <div class="row g-3 mt-2">
+                <div class="row g-3 mt-3 text-start">
                     <div class="col-sm-6">
-                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-light">
+                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-white transition-hover">
                             <i class="fas fa-trophy text-red fs-4"></i>
                             <span class="fw-bold text-navy text-uppercase small">Global Reach</span>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-light">
+                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-white transition-hover">
                             <i class="fas fa-link text-red fs-4"></i>
                             <span class="fw-bold text-navy text-uppercase small">Creative Synergy</span>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-light">
+                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-white transition-hover">
                             <i class="fas fa-users text-red fs-4"></i>
                             <span class="fw-bold text-navy text-uppercase small">Diverse Voices</span>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-light">
+                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-white transition-hover">
                             <i class="fas fa-film text-red fs-4"></i>
-                            <span class="fw-bold text-navy text-uppercase small">Industry Networking</span>
+                            <span class="fw-bold text-navy text-uppercase small">Industry Network</span>
                         </div>
                     </div>
                 </div>
@@ -380,9 +380,9 @@ if ($db) {
 <!-- Why IBIFF Section (Light Theme) -->
 <section class="py-5 bg-light overflow-hidden">
     <div class="container">
-        <div class="row align-items-center flex-column-reverse flex-lg-row g-5">
-            <div class="col-lg-6" data-aos="fade-right">
-                <span class="section-tag text-muted">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 text-center text-lg-start" data-aos="fade-right">
+                <span class="section-tag text-muted mx-auto mx-lg-0">
                     <?php echo htmlspecialchars(getSetting('why_tag', 'Why Join Us?')); ?>
                 </span>
                 <h2 class="section-heading text-navy font-cinzel mb-4">
@@ -398,18 +398,18 @@ if ($db) {
                     }
                     ?>
                 </h2>
-                <div class="separator-line mb-4"></div>
+                <div class="separator-line mb-4 mx-auto mx-lg-0"></div>
                 <p class="lead text-muted mb-5">
-                    <?php echo htmlspecialchars(getSetting('why_subtitle', 'Elevate your filmmaking career by participating in a festival that truly values artistic merit and storytelling innovation.')); ?>
+                    <?php echo htmlspecialchars(getSetting('why_subtitle', 'Elevate your filmmaking career by participating in a festival that truly values artistic merit, storytelling innovation, and impactful narratives. Our platform is designed to give your voice the spotlight it deserves.')); ?>
                 </p>
                 
-                <div class="row g-4">
+                <div class="row g-4 text-start">
                     <?php 
                     $defaultWhy = [
                         ['title' => 'International Exposure', 'desc' => 'Your film will be showcased to a diverse audience and top industry executives.'],
                         ['title' => 'Valuable Networking', 'desc' => 'Connect with established directors, producers, and potential distributors.'],
                         ['title' => 'Prestigious Awards', 'desc' => 'Compete for globally recognized accolades and cash prizes.'],
-                        ['title' => 'Masterclasses & Panels', 'desc' => 'Learn from the best in the business through exclusive interactive sessions.']
+                        ['title' => 'Masterclasses', 'desc' => 'Learn from the best in the business through exclusive interactive sessions.']
                     ];
                     for ($i = 1; $i <= 4; $i++): 
                         $title = getSetting("why_item_{$i}_title", $defaultWhy[$i-1]['title']);
@@ -432,14 +432,14 @@ if ($db) {
                 </div>
             </div>
             
-            <div class="col-lg-6" data-aos="fade-left">
+            <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left">
                 <div class="row g-3">
                     <div class="col-6">
-                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400" alt="Festival Action" class="img-fluid rounded shadow w-100 h-100" style="object-fit: cover; min-height: 380px;">
+                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400" alt="Festival Action" class="img-fluid rounded shadow-lg w-100 h-100" style="object-fit: cover; min-height: 380px;">
                     </div>
                     <div class="col-6 pt-lg-5 pt-3">
-                        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=400" alt="Networking" class="img-fluid rounded shadow w-100 mb-3" style="object-fit: cover; height: 180px;">
-                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=600" alt="Awards" class="img-fluid rounded shadow w-100" style="object-fit: cover; height: 180px;">
+                        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=400" alt="Networking" class="img-fluid rounded shadow-lg w-100 mb-3" style="object-fit: cover; height: 180px;">
+                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=600" alt="Awards" class="img-fluid rounded shadow-lg w-100" style="object-fit: cover; height: 180px;">
                     </div>
                 </div>
             </div>
@@ -583,13 +583,18 @@ if ($db) {
 <section class="py-5 bg-white border-top border-bottom overflow-hidden">
     <div class="text-center mb-4" data-aos="fade-up">
         <span class="section-tag text-muted">In The Spotlight</span>
-        <h3 class="text-navy fw-900 text-uppercase font-cinzel" style="letter-spacing: 1px;">MOMENTS & <span class="red">MEMORIES</span></h3>
+        <h3 class="text-navy fw-900 text-uppercase font-cinzel" style="letter-spacing: 1px;"><?php echo htmlspecialchars(getSetting('moments_title', 'MOMENTS & MEMORIES')); ?></h3>
     </div>
     <div class="film-strip-wrapper">
         <div class="news-marquee-container">
             <div class="news-marquee-content">
                 <?php 
-                $newsImages = glob('newsimages/*.{jpg,jpeg,png}', GLOB_BRACE);
+                $newsImages = [];
+                for ($m=1; $m<=4; $m++) {
+                    $img = getSetting("moments_img_$m");
+                    if ($img) $newsImages[] = $img;
+                }
+                
                 if (!empty($newsImages)) {
                     for ($i = 0; $i < 2; $i++) {
                         echo '<div class="news-marquee-track">';
@@ -620,22 +625,33 @@ if ($db) {
     </div>
     <div class="marquee-container bg-light">
         <div class="marquee-content">
+            <?php 
+            $partners = [];
+            for ($i=1; $i<=6; $i++) {
+                $img = getSetting("partner_img_$i");
+                if ($img) $partners[] = $img;
+            }
+            if (empty($partners)) {
+                $partners = [
+                    "https://placehold.co/200x80/f8f9fa/050a12?text=SVF+Entertainment&font=montserrat",
+                    "https://placehold.co/200x80/f8f9fa/050a12?text=Hoichoi&font=montserrat",
+                    "https://placehold.co/200x80/f8f9fa/050a12?text=Surinder+Films&font=montserrat",
+                    "https://placehold.co/200x80/f8f9fa/050a12?text=Windows+Production&font=montserrat",
+                    "https://placehold.co/200x80/f8f9fa/050a12?text=Eskay+Movies&font=montserrat",
+                    "https://placehold.co/200x80/f8f9fa/050a12?text=Camellia+Films&font=montserrat"
+                ];
+            }
+            ?>
             <div class="marquee-track">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=SVF+Entertainment&font=montserrat" alt="SVF" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Hoichoi&font=montserrat" alt="Hoichoi" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Surinder+Films&font=montserrat" alt="Surinder Films" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Windows+Production&font=montserrat" alt="Windows Production" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Eskay+Movies&font=montserrat" alt="Eskay Movies" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Camellia+Films&font=montserrat" alt="Camellia Films" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <?php foreach($partners as $p): ?>
+                    <img src="<?php echo htmlspecialchars($p); ?>" alt="Partner" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <?php endforeach; ?>
             </div>
             <!-- Duplicate content for smooth infinite scrolling -->
             <div class="marquee-track">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=SVF+Entertainment&font=montserrat" alt="SVF" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Hoichoi&font=montserrat" alt="Hoichoi" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Surinder+Films&font=montserrat" alt="Surinder Films" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Windows+Production&font=montserrat" alt="Windows Production" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Eskay+Movies&font=montserrat" alt="Eskay Movies" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
-                <img src="https://placehold.co/200x80/f8f9fa/050a12?text=Camellia+Films&font=montserrat" alt="Camellia Films" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <?php foreach($partners as $p): ?>
+                    <img src="<?php echo htmlspecialchars($p); ?>" alt="Partner" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
