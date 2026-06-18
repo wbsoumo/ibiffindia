@@ -1,0 +1,67 @@
+@media (max-width: 991.98px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .section-padding, .py-large {
+        padding: 60px 0;
+    }
+    
+    .navbar-collapse {
+        background: var(--black);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        border: 1px solid var(--glass-border);
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .navbar-nav {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .navbar-nav .nav-item {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    
+    .navbar-nav .nav-item .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .festival-poster-wrapper {
+        margin-bottom: 40px;
+        box-shadow: 10px 10px 0 var(--primary-red);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+
+    .cta-item {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding: 40px 20px;
+    }
+
+    .hero-section {
+        background-attachment: scroll;
+        height: auto;
+        padding: 150px 0 100px;
+    }
+
+    .hero-btns .btn {
+        width: 100%;
+        margin-bottom: 15px;
+        margin-right: 0 !important;
+    }
+}

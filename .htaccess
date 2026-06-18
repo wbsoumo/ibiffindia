@@ -1,0 +1,20 @@
+RewriteEngine On
+
+# Ensure index.php is loaded if no file is specified
+DirectoryIndex index.php
+
+# Redirect to non-php extension URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [NC,L]
+
+# SEO Friendly URLs for Films
+# /film/my-cool-movie -> film-details.php?slug=my-cool-movie
+RewriteRule ^film/([^/]+)$ film-details.php?slug=$1 [L,QSA]
+
+# SEO Friendly URLs for Years
+# /films/2025 -> films.php?year=2025
+RewriteRule ^films/([0-9]{4})$ films.php?year=$1 [L,QSA]
+
+# Prevent directory listing
+Options -Indexes
