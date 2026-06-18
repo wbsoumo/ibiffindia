@@ -4,8 +4,8 @@
         <a class="navbar-brand" href="index.php">
             <span class="brand-text text-white">IBIFF <span class="red">INDIA</span></span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <i class="fas fa-bars text-white"></i>
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <i class="fas fa-bars" style="color: var(--primary-navy); font-size: 1.5rem;"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center">
