@@ -88,11 +88,11 @@ h4, h5, h6, .nav-link, .btn-premium {
 
 /* Navbar */
 .main-navbar {
-    background: rgba(255, 255, 255, 0.96) !important;
+    background: #050a12 !important; /* Deep cinematic navy */
     backdrop-filter: blur(15px);
     border-bottom: 2px solid var(--gold-solid);
     padding: 15px 0;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .navbar-brand .brand-text {
@@ -100,7 +100,7 @@ h4, h5, h6, .nav-link, .btn-premium {
     font-weight: 900;
     font-size: 2rem;
     letter-spacing: -1px;
-    color: var(--primary-navy) !important;
+    color: var(--white) !important;
 }
 
 .navbar-brand .brand-text .red {
@@ -108,7 +108,7 @@ h4, h5, h6, .nav-link, .btn-premium {
 }
 
 .nav-link {
-    color: var(--primary-navy) !important;
+    color: var(--light-cream) !important;
     font-weight: 800;
     font-size: 0.85rem;
     margin: 0 12px;
@@ -251,10 +251,11 @@ h4, h5, h6, .nav-link, .btn-premium {
         aspect-ratio: 16 / 9;
     }
     .navbar-collapse {
-        background-color: var(--white);
+        background-color: #050a12;
         padding: 15px;
         border-radius: 8px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         margin-top: 10px;
     }
 }
