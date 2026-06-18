@@ -242,6 +242,46 @@ h4, h5, h6, .nav-link, .btn-premium {
     background: var(--primary-red);
 }
 
+@media (max-width: 768px) {
+    .topHeroSlider {
+        height: auto;
+        min-height: auto;
+        aspect-ratio: 16 / 9;
+    }
+}
+
+/* TOP WELCOME BANNER */
+.top-welcome-banner {
+    padding-top: 35px;
+    padding-bottom: 25px;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.top-welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, #151515, #151515 8px, #fff 8px, #fff 16px);
+    opacity: 0.8;
+}
+
+.top-welcome-title {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--primary-navy);
+    line-height: 1.25;
+}
+
+.top-welcome-title .red {
+    color: var(--primary-red);
+}
+
 /* Main Landing Section */
 .landing-section {
     padding-top: 50px;

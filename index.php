@@ -53,6 +53,16 @@ if ($db) {
     </div>
 </section>
 
+<!-- Top Welcome Banner Section -->
+<section class="top-welcome-banner text-center">
+    <div class="container" data-aos="fade-down">
+        <h1 class="top-welcome-title font-cinzel text-uppercase">
+            Welcome to <span class="red">THE INTERNATIONAL</span> INDO-BANGLA FILM FESTIVAL <span class="red">| IBIFF INDIA</span>
+        </h1>
+        <div class="separator-line centered"></div>
+    </div>
+</section>
+
 <!-- Main Landing Section -->
 <section class="landing-section">
     <div class="container">
