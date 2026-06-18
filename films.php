@@ -17,14 +17,16 @@ if ($db) {
 }
 ?>
 
-<section class="section-padding py-large bg-white text-black mt-5">
-    <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h6 class="text-uppercase red fw-bold mb-2">The Showcase</h6>
-            <h2 class="section-title mb-4">OFFICIAL <span class="red">SELECTION</span></h2>
-            <p class="text-muted mx-auto" style="max-width: 600px;">Explore the finest cinematic gems from the <?php echo $selectedYear; ?> edition of IBIFF INDIA.</p>
-        </div>
+<!-- Page Header -->
+<section class="py-5 bg-black text-white mt-5">
+    <div class="container py-5 text-center" data-aos="fade-up">
+        <h1 class="display-4 fw-900 mb-3 text-uppercase"><?php echo htmlspecialchars(getSetting('films_page_title', 'OFFICIAL SELECTION')); ?></h1>
+        <p class="lead opacity-75 mb-0" style="letter-spacing: 2px;"><?php echo htmlspecialchars(getSetting('films_page_subtitle', 'Discover the visionary cinematic works from across the globe.')); ?></p>
+    </div>
+</section>
 
+<section class="section-padding py-large bg-white text-black">
+    <div class="container">
         <!-- Year Filter -->
         <div class="year-filter d-flex justify-content-center flex-wrap gap-2 mb-5" data-aos="fade-up">
             <?php foreach($years as $year): ?>

@@ -126,9 +126,9 @@ if ($db) {
 
     <form method="POST" enctype="multipart/form-data">
         <!-- Navigation Tabs -->
-        <ul class="nav nav-pills mb-4 border-bottom pb-3" id="settingsTabs" role="tablist">
+        <ul class="nav nav-pills mb-4 border-bottom pb-3 flex-nowrap" style="overflow-x: auto; white-space: nowrap;" id="settingsTabs" role="tablist">
             <?php 
-            $sections = ['Hero', 'Welcome', 'Highlights', 'Mission', 'Why Join', 'CineBridge'];
+            $sections = array_keys($settings);
             $activeClass = 'active';
             foreach ($sections as $sec):
             ?>

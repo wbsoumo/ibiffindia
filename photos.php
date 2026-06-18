@@ -37,8 +37,19 @@ if (empty($gallery)) {
 <section class="hero-section" style="background-image: url('assets/images/gallery-header-bg.png'); min-height: 50vh;">
     <div class="hero-bg-overlay"></div>
     <div class="container hero-content text-center">
-        <h1 class="hero-title" style="font-size: 5rem;">THE <span class="red">GALLERY</span></h1>
-        <p class="lead text-white fw-bold" style="letter-spacing: 5px;">MOMENTS THAT DEFINE CINEMA</p>
+        <h1 class="hero-title" style="font-size: 5rem;">
+            <?php 
+            $galTitle = getSetting('gallery_page_title', 'FESTIVAL GALLERY');
+            $parts = explode(' ', $galTitle);
+            if (count($parts) > 1) {
+                $last = array_pop($parts);
+                echo htmlspecialchars(implode(' ', $parts)) . ' <span class="red">' . htmlspecialchars($last) . '</span>';
+            } else {
+                echo htmlspecialchars($galTitle);
+            }
+            ?>
+        </h1>
+        <p class="lead text-white fw-bold" style="letter-spacing: 5px;"><?php echo htmlspecialchars(getSetting('gallery_page_subtitle', 'MOMENTS THAT DEFINE CINEMA')); ?></p>
     </div>
 </section>
 

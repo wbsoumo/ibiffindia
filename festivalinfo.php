@@ -21,17 +21,28 @@ foreach ($allEvents as $event) {
 <section class="hero-section" style="background-image: url('assets/images/hero-bg.png'); min-height: 50vh;">
     <div class="hero-bg-overlay"></div>
     <div class="container hero-content text-center">
-        <h1 class="hero-title" style="font-size: 5rem;">THE <span class="red">TIMELINE</span></h1>
-        <p class="lead text-white fw-bold" style="letter-spacing: 5px;">SCREENINGS, TALKS & MASTERCLASSES</p>
+        <h1 class="hero-title" style="font-size: 5rem;">
+            <?php 
+            $festTitle = getSetting('festinfo_page_title', 'FESTIVAL INFO');
+            $parts = explode(' ', $festTitle);
+            if (count($parts) > 1) {
+                $last = array_pop($parts);
+                echo htmlspecialchars(implode(' ', $parts)) . ' <span class="red">' . htmlspecialchars($last) . '</span>';
+            } else {
+                echo htmlspecialchars($festTitle);
+            }
+            ?>
+        </h1>
+        <p class="lead text-white fw-bold" style="letter-spacing: 5px;"><?php echo htmlspecialchars(getSetting('festinfo_page_subtitle', 'SCREENINGS, TALKS & MASTERCLASSES')); ?></p>
     </div>
 </section>
 
 <section class="section-padding py-large bg-white text-black">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <h6 class="text-uppercase red fw-bold mb-2">Schedule 2024</h6>
-            <h2 class="section-title mb-4">FESTIVAL <span class="red">PROGRAM</span></h2>
-            <p class="text-muted mx-auto" style="max-width: 600px;">Experience the best of world cinema. Join us for screenings, masterclasses, and exclusive Q&A sessions.</p>
+            <h6 class="text-uppercase red fw-bold mb-2">Schedule</h6>
+            <h2 class="section-title mb-4"><?php echo htmlspecialchars(getSetting('festinfo_schedule_title', 'FESTIVAL PROGRAM')); ?></h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;"><?php echo htmlspecialchars(getSetting('festinfo_schedule_text', 'Experience the best of world cinema. Join us for screenings, masterclasses, and exclusive Q&A sessions.')); ?></p>
         </div>
 
         <div class="timeline-container mt-5">
