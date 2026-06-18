@@ -151,14 +151,14 @@ if ($db) {
     </div>
 </section>
 
-<!-- Highlights Overview Section (4 Cards - same to same like IKSFF) -->
-<section class="highlights-overview-section py-large">
+<!-- Highlights Overview Section (4 Cards - Glowing UI) -->
+<section class="highlights-overview-section py-large position-relative" style="background: #050a12; z-index: 1;">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-heading text-navy text-uppercase font-cinzel" style="font-size: 2.3rem; letter-spacing: 1.5px;">
+            <h2 class="section-heading text-white text-uppercase font-cinzel" style="font-size: 2.3rem; letter-spacing: 1.5px; text-shadow: 0 0 20px rgba(255,255,255,0.1);">
                 FESTIVAL OVERVIEW & KEY HIGHLIGHTS
             </h2>
-            <div class="separator-line centered"></div>
+            <div class="separator-line centered mt-3"></div>
         </div>
         
         <div class="row g-4 justify-content-center">
@@ -169,10 +169,10 @@ if ($db) {
                         <div class="card-icon rounded-circle mb-4 shadow-sm">
                             <i class="fas fa-calendar-alt"></i>
                         </div>
-                        <h4 class="card-title fw-bold mb-3 font-cinzel">
+                        <h4 class="card-title fw-bold mb-3 font-cinzel text-white">
                             <?php echo htmlspecialchars(getSetting('highlights_dates_title', 'Festival Dates')); ?>
                         </h4>
-                        <p class="card-desc text-muted mb-0">
+                        <p class="card-desc text-light opacity-75 mb-0">
                             <?php echo htmlspecialchars(getSetting('highlights_dates_subtitle', 'This hybrid festival will be held from:')); ?>
                         </p>
                     </div>
@@ -191,20 +191,20 @@ if ($db) {
                         <div class="card-icon rounded-circle mb-4 shadow-sm">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <h4 class="card-title fw-bold mb-3 font-cinzel">
+                        <h4 class="card-title fw-bold mb-3 font-cinzel text-white">
                             <?php echo htmlspecialchars(getSetting('highlights_venue_title', 'Physical Venues')); ?>
                         </h4>
                         <ul class="list-unstyled venue-list mb-0">
                             <?php if (getSetting('highlights_venue_1')): ?>
                                 <li class="d-flex align-items-start gap-2 mb-3">
-                                    <i class="fas fa-chevron-right text-red mt-1 small"></i>
-                                    <span class="small fw-semibold"><?php echo htmlspecialchars(getSetting('highlights_venue_1')); ?></span>
+                                    <i class="fas fa-chevron-right text-gold mt-1 small"></i>
+                                    <span class="small fw-semibold text-light opacity-75"><?php echo htmlspecialchars(getSetting('highlights_venue_1')); ?></span>
                                 </li>
                             <?php endif; ?>
                             <?php if (getSetting('highlights_venue_2')): ?>
                                 <li class="d-flex align-items-start gap-2">
-                                    <i class="fas fa-chevron-right text-red mt-1 small"></i>
-                                    <span class="small fw-semibold"><?php echo htmlspecialchars(getSetting('highlights_venue_2')); ?></span>
+                                    <i class="fas fa-chevron-right text-gold mt-1 small"></i>
+                                    <span class="small fw-semibold text-light opacity-75"><?php echo htmlspecialchars(getSetting('highlights_venue_2')); ?></span>
                                 </li>
                             <?php endif; ?>
                         </ul>
@@ -219,21 +219,21 @@ if ($db) {
                         <div class="card-icon rounded-circle mb-4 shadow-sm">
                             <i class="fas fa-tv"></i>
                         </div>
-                        <h4 class="card-title fw-bold mb-3 font-cinzel">
+                        <h4 class="card-title fw-bold mb-3 font-cinzel text-white">
                             <?php echo htmlspecialchars(getSetting('highlights_online_title', 'Online Festival')); ?>
                         </h4>
-                        <p class="card-desc text-muted mb-3">
+                        <p class="card-desc text-light opacity-75 mb-3">
                             <?php echo htmlspecialchars(getSetting('highlights_online_subtitle', 'Streaming on')); ?>
                         </p>
                         <?php if (getSetting('highlights_online_logo')): ?>
-                            <div class="logo-wrapper py-2 text-center bg-light rounded border mb-3 shadow-inner">
-                                <img src="<?php echo htmlspecialchars(getSetting('highlights_online_logo')); ?>" alt="Online Partner" class="img-fluid" style="max-height: 40px; object-fit: contain;">
+                            <div class="logo-wrapper py-2 text-center rounded border border-light border-opacity-10 mb-3 bg-white shadow-inner">
+                                <img src="<?php echo htmlspecialchars(getSetting('highlights_online_logo')); ?>" alt="Online Partner" class="img-fluid" style="max-height: 40px; object-fit: contain; filter: brightness(0.9);">
                             </div>
                         <?php endif; ?>
                     </div>
                     <div class="card-bottom mt-auto">
                         <?php if (getSetting('highlights_online_url')): ?>
-                            <a href="<?php echo htmlspecialchars(getSetting('highlights_online_url')); ?>" target="_blank" class="btn btn-outline-navy btn-sm w-100 py-2 fw-bold">
+                            <a href="<?php echo htmlspecialchars(getSetting('highlights_online_url')); ?>" target="_blank" class="btn btn-outline-gold btn-sm w-100 py-2 fw-bold" style="border-color: var(--gold-solid); color: var(--gold-solid);">
                                 VISIT STREAM ZONE <i class="fas fa-external-link-alt ms-1 small"></i>
                             </a>
                         <?php endif; ?>
@@ -248,7 +248,7 @@ if ($db) {
                         <div class="card-icon rounded-circle mb-4 shadow-sm">
                             <i class="fas fa-photo-film"></i>
                         </div>
-                        <h4 class="card-title fw-bold mb-3 font-cinzel">
+                        <h4 class="card-title fw-bold mb-3 font-cinzel text-white">
                             <?php echo htmlspecialchars(getSetting('highlights_categories_title', 'Festival Categories')); ?>
                         </h4>
                         <div class="categories-tags d-flex flex-wrap gap-2">
