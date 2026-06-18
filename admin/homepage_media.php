@@ -74,10 +74,24 @@ $media = [
 ];
 
 if ($db) {
-    $stmt = $db->query("SELECT * FROM homepage_media ORDER BY media_type, display_order ASC");
-    $allMedia = $stmt->fetchAll();
-    foreach ($allMedia as $item) {
-        $media[$item['media_type']][] = $item;
+    try {
+        $stmt = $db->query("SELECT * FROM homepage_media ORDER BY media_type, display_order ASC");
+        if ($stmt) {
+            $allMedia = $stmt->fetchAll();
+            foreach ($allMedia as $item) {
+                $media[$item['media_type']][] = $item;
+            }
+        } else {
+            throw new Exception("Query failed or table missing");
+        }
+    } catch (Exception $e) {
+        $db->exec("CREATE TABLE IF NOT EXISTS homepage_media (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            media_type ENUM('slider', 'moment', 'partner') NOT NULL,
+            file_path VARCHAR(255) NOT NULL,
+            display_order INT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )");
     }
 }
 ?>
