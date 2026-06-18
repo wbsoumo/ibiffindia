@@ -29,13 +29,27 @@ if ($db) {
 }
 ?>
 
-<!-- Top Welcome Banner Section (Precision IKSFF layout replica) -->
-<section class="top-welcome-banner text-center">
-    <div class="container" data-aos="fade-down">
-        <h1 class="top-welcome-title font-cinzel text-uppercase">
-            Welcome to <span class="red">THE INTERNATIONAL</span> INDO-BANGLA FILM FESTIVAL <span class="red">| IBIFF INDIA</span>
-        </h1>
-        <div class="separator-line centered"></div>
+<!-- Top Image Slider Section -->
+<section class="top-image-slider">
+    <div class="swiper topHeroSlider">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920" alt="Film Production Scene 1" class="img-fluid w-100 hero-slider-img">
+            </div>
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1920" alt="Film Production Scene 2" class="img-fluid w-100 hero-slider-img">
+            </div>
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1920" alt="Film Production Scene 3" class="img-fluid w-100 hero-slider-img">
+            </div>
+        </div>
+        <!-- Pagination & Navigation -->
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next text-red"></div>
+        <div class="swiper-button-prev text-red"></div>
     </div>
 </section>
 

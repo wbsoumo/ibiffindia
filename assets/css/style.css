@@ -217,36 +217,29 @@ h4, h5, h6, .nav-link, .btn-premium {
     transform: translateY(-3px);
 }
 
-/* TOP WELCOME BANNER (Precision IKSFF style replica) */
-.top-welcome-banner {
-    padding-top: 140px;
-    padding-bottom: 40px;
-    background-color: var(--white);
-    border-bottom: 1px solid var(--border-color);
-    position: relative;
-    overflow: hidden;
-}
-
-.top-welcome-banner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+/* Top Image Slider Section */
+.top-image-slider {
+    padding-top: 110px; /* Offset for navbar */
     width: 100%;
-    height: 10px;
-    background: repeating-linear-gradient(90deg, #151515, #151515 8px, #fff 8px, #fff 16px);
-    opacity: 0.8;
+    background-color: #111;
 }
-
-.top-welcome-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--primary-navy);
-    line-height: 1.25;
+.topHeroSlider {
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
 }
-
-.top-welcome-title .red {
+.hero-slider-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+}
+.topHeroSlider .swiper-button-next,
+.topHeroSlider .swiper-button-prev {
     color: var(--primary-red);
+}
+.topHeroSlider .swiper-pagination-bullet-active {
+    background: var(--primary-red);
 }
 
 /* Main Landing Section */
