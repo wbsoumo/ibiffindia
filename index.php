@@ -312,15 +312,21 @@ if ($db) {
 </section>
 
 <!-- Overlapping Mission Section (Light Theme) -->
-<section class="py-large overlap-container">
-    <div class="container">
-        <div class="row g-0 align-items-center">
-            <div class="col-lg-6 overlap-image" data-aos="fade-right">
-                <img src="<?php echo htmlspecialchars(getSetting('mission_image', 'assets/images/poster.jpg')); ?>" alt="IBIFF Mission" class="img-fluid rounded">
+<section class="py-5 bg-white">
+    <div class="container overflow-hidden">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="position-relative">
+                    <img src="<?php echo htmlspecialchars(getSetting('mission_image', 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=800')); ?>" alt="IBIFF Mission" class="img-fluid rounded shadow-lg w-100" style="object-fit: cover; min-height: 450px;">
+                    <div class="position-absolute bottom-0 end-0 bg-white p-3 shadow-sm rounded-start mb-4 d-none d-md-block" style="transform: translateX(10%);">
+                        <h4 class="font-cinzel text-navy mb-0">10+ Years</h4>
+                        <p class="small text-muted mb-0">Of Cinematic Excellence</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-7 overlap-content text-dark" data-aos="fade-left">
+            <div class="col-lg-7 px-lg-5" data-aos="fade-left">
                 <span class="section-tag text-muted"><?php echo htmlspecialchars(getSetting('mission_tag', 'Our Vision')); ?></span>
-                <h2 class="section-heading text-navy font-cinzel">
+                <h2 class="section-heading text-navy font-cinzel mb-4">
                     <?php 
                     $missionTitle = getSetting('mission_title', 'BRIDGING CULTURES THROUGH CINEMA');
                     $titleParts = explode(' ', $missionTitle);
@@ -333,21 +339,37 @@ if ($db) {
                     }
                     ?>
                 </h2>
-                <div class="separator-line"></div>
-                <p class="lead text-navy mb-4 fw-semibold" style="font-size: 1.1rem;">
-                    <?php echo htmlspecialchars(getSetting('mission_subtitle')); ?>
+                <div class="separator-line mb-4"></div>
+                <p class="lead text-navy mb-3 fw-semibold">
+                    <?php echo htmlspecialchars(getSetting('mission_subtitle', 'Uniting filmmakers and audiences from across the globe.')); ?>
                 </p>
-                <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                    <?php echo nl2br(htmlspecialchars(getSetting('mission_text'))); ?>
+                <p class="text-muted mb-4">
+                    <?php echo nl2br(htmlspecialchars(getSetting('mission_text', "The International Indo-Bangla Film Festival (IBIFF) is a premier platform dedicated to showcasing the finest independent cinema. Our mission is to foster cross-cultural dialogue through the universal language of film. We provide an unparalleled opportunity for visionary storytellers to present their work to an international audience, critics, and industry professionals. Join us in celebrating the magic of cinema and the powerful stories that connect us all."))); ?>
                 </p>
-                <div class="d-flex gap-4">
-                    <div class="feature-item d-flex align-items-center gap-2">
-                        <i class="fas fa-trophy text-red"></i>
-                        <span class="fw-bold text-navy text-uppercase small" style="letter-spacing: 1px;">Global Reach</span>
+                <div class="row g-3 mt-2">
+                    <div class="col-sm-6">
+                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-light">
+                            <i class="fas fa-trophy text-red fs-4"></i>
+                            <span class="fw-bold text-navy text-uppercase small">Global Reach</span>
+                        </div>
                     </div>
-                    <div class="feature-item d-flex align-items-center gap-2">
-                        <i class="fas fa-link text-red"></i>
-                        <span class="fw-bold text-navy text-uppercase small" style="letter-spacing: 1px;">Creative Synergy</span>
+                    <div class="col-sm-6">
+                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-light">
+                            <i class="fas fa-link text-red fs-4"></i>
+                            <span class="fw-bold text-navy text-uppercase small">Creative Synergy</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-light">
+                            <i class="fas fa-users text-red fs-4"></i>
+                            <span class="fw-bold text-navy text-uppercase small">Diverse Voices</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="feature-item d-flex align-items-center gap-3 p-3 border rounded shadow-sm bg-light">
+                            <i class="fas fa-film text-red fs-4"></i>
+                            <span class="fw-bold text-navy text-uppercase small">Industry Networking</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -356,14 +378,14 @@ if ($db) {
 </section>
 
 <!-- Why IBIFF Section (Light Theme) -->
-<section class="py-large bg-white">
+<section class="py-5 bg-light overflow-hidden">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+        <div class="row align-items-center flex-column-reverse flex-lg-row g-5">
+            <div class="col-lg-6" data-aos="fade-right">
                 <span class="section-tag text-muted">
                     <?php echo htmlspecialchars(getSetting('why_tag', 'Why Join Us?')); ?>
                 </span>
-                <h2 class="section-heading text-navy">
+                <h2 class="section-heading text-navy font-cinzel mb-4">
                     <?php 
                     $whyTitle = getSetting('why_title', 'A PLATFORM FOR VISIONARIES');
                     $titleParts = explode(' ', $whyTitle);
@@ -376,44 +398,48 @@ if ($db) {
                     }
                     ?>
                 </h2>
-                <div class="separator-line"></div>
-                <p class="lead text-muted mb-5" style="font-size: 1.05rem;">
-                    <?php echo htmlspecialchars(getSetting('why_subtitle')); ?>
+                <div class="separator-line mb-4"></div>
+                <p class="lead text-muted mb-5">
+                    <?php echo htmlspecialchars(getSetting('why_subtitle', 'Elevate your filmmaking career by participating in a festival that truly values artistic merit and storytelling innovation.')); ?>
                 </p>
                 
                 <div class="row g-4">
-                    <?php for ($i = 1; $i <= 4; $i++): 
-                        $title = getSetting("why_item_{$i}_title");
-                        $desc = getSetting("why_item_{$i}_desc");
-                        if (!empty($title)):
-                            $icons = ['fa-globe-asia', 'fa-handshake', 'fa-graduation-cap', 'fa-star'];
-                            $icon = $icons[$i - 1];
+                    <?php 
+                    $defaultWhy = [
+                        ['title' => 'International Exposure', 'desc' => 'Your film will be showcased to a diverse audience and top industry executives.'],
+                        ['title' => 'Valuable Networking', 'desc' => 'Connect with established directors, producers, and potential distributors.'],
+                        ['title' => 'Prestigious Awards', 'desc' => 'Compete for globally recognized accolades and cash prizes.'],
+                        ['title' => 'Masterclasses & Panels', 'desc' => 'Learn from the best in the business through exclusive interactive sessions.']
+                    ];
+                    for ($i = 1; $i <= 4; $i++): 
+                        $title = getSetting("why_item_{$i}_title", $defaultWhy[$i-1]['title']);
+                        $desc = getSetting("why_item_{$i}_desc", $defaultWhy[$i-1]['desc']);
+                        $icons = ['fa-globe-asia', 'fa-handshake', 'fa-award', 'fa-chalkboard-teacher'];
+                        $icon = $icons[$i - 1];
                     ?>
                         <div class="col-sm-6">
-                            <div class="d-flex align-items-start gap-3">
-                                <div class="icon-circle p-3 rounded-circle" style="width: 55px; height: 55px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas <?php echo $icon; ?> text-red"></i>
+                            <div class="d-flex align-items-start gap-3 bg-white p-3 rounded shadow-sm h-100 border-start border-3 border-danger transition-hover">
+                                <div class="icon-circle">
+                                    <i class="fas <?php echo $icon; ?> text-red fs-3 mt-1"></i>
                                 </div>
                                 <div>
-                                    <h6 class="fw-bold text-navy mb-1"><?php echo htmlspecialchars($title); ?></h6>
-                                    <p class="small text-muted mb-0"><?php echo htmlspecialchars($desc); ?></p>
+                                    <h6 class="fw-bold text-navy mb-2"><?php echo htmlspecialchars($title); ?></h6>
+                                    <p class="small text-muted mb-0" style="line-height: 1.6;"><?php echo htmlspecialchars($desc); ?></p>
                                 </div>
                             </div>
                         </div>
-                    <?php endif; endfor; ?>
+                    <?php endfor; ?>
                 </div>
             </div>
             
             <div class="col-lg-6" data-aos="fade-left">
-                <div class="row g-3 mesh-mimic">
-                    <div class="col-6 mesh-item">
-                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400" alt="Festival" class="img-fluid rounded shadow">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400" alt="Festival Action" class="img-fluid rounded shadow w-100 h-100" style="object-fit: cover; min-height: 380px;">
                     </div>
-                    <div class="col-6 mesh-item pt-5">
-                        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=400" alt="Festival" class="img-fluid rounded shadow">
-                    </div>
-                    <div class="col-12 mesh-item">
-                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=600" alt="Festival" class="img-fluid rounded shadow">
+                    <div class="col-6 pt-lg-5 pt-3">
+                        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=400" alt="Networking" class="img-fluid rounded shadow w-100 mb-3" style="object-fit: cover; height: 180px;">
+                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=600" alt="Awards" class="img-fluid rounded shadow w-100" style="object-fit: cover; height: 180px;">
                     </div>
                 </div>
             </div>
