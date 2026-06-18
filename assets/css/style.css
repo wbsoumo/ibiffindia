@@ -487,3 +487,92 @@ h6,
     filter: grayscale(0);
     opacity: 1;
 }
+
+/* Highlights Section Styles */
+.highlights-overview-section {
+    background: #050505;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.highlight-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.highlight-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary-red);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(198, 2, 2, 0.15);
+}
+
+.highlight-card .card-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 1px solid rgba(198, 2, 2, 0.2);
+    box-shadow: 0 0 15px rgba(198, 2, 2, 0.1);
+}
+
+.highlight-card .card-title {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
+    font-size: 1.15rem;
+}
+
+.highlight-card .card-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.highlight-card .date-highlight {
+    font-family: 'Barlow', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.highlight-card .venue-list li {
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.highlight-card .categories-tags .badge {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.highlight-card .categories-tags .badge:hover {
+    background: var(--primary-red);
+    color: var(--white);
+    border-color: var(--primary-red);
+    transform: scale(1.05);
+}
+
+.logo-wrapper {
+    transition: all 0.3s ease;
+}
+
+.logo-wrapper:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.font-cinzel {
+    font-family: 'Cinzel', serif;
+}
