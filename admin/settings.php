@@ -74,6 +74,64 @@ if ($db) {
     $stmt = $db->query("SELECT * FROM site_settings ORDER BY setting_section, id");
     $allSettings = $stmt->fetchAll();
     
+    // Auto-seed if empty
+    if (empty($allSettings)) {
+        $defaultSettings = [
+            ['site_logo', 'assets/images/logo.png', 'image', 'Site Logo (Navbar)', 'General Settings'],
+            ['site_favicon', 'assets/images/favicon.ico', 'image', 'Site Favicon', 'General Settings'],
+            ['meta_title', 'IBIFF INDIA | Indo-Bangla International Film Festival', 'text', 'Meta Title', 'General Settings'],
+            ['meta_description', 'Celebrating Cross-Border Cinema and connecting cultures through storytelling.', 'textarea', 'Meta Description', 'General Settings'],
+            
+            ['about_tagline', 'Bridging the cinematic gap between India and Bangladesh.', 'text', 'About Us Tagline', 'Page - About'],
+            ['about_history_title', 'THE HEART OF IBIFF INDIA', 'text', 'History Title', 'Page - About'],
+            ['about_history_text', 'Founded with a passion for storytelling...', 'textarea', 'History Text', 'Page - About'],
+            
+            ['slider_img_1', 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920', 'image', 'Slider Image 1', 'Page - Homepage'],
+            ['slider_img_2', 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1920', 'image', 'Slider Image 2', 'Page - Homepage'],
+            ['slider_img_3', 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1920', 'image', 'Slider Image 3', 'Page - Homepage'],
+            ['submit_film_link', 'https://filmfreeway.com', 'text', 'Submit Film Button Link', 'Page - Homepage'],
+            
+            ['mission_tag', 'Our Vision', 'text', 'Vision Tag', 'Page - Homepage'],
+            ['mission_title', 'BRIDGING CULTURES THROUGH CINEMA', 'text', 'Vision Title', 'Page - Homepage'],
+            ['mission_subtitle', 'Uniting filmmakers, storytellers, and diverse audiences from across the globe under one roof.', 'textarea', 'Vision Subtitle', 'Page - Homepage'],
+            ['mission_text', 'The International Indo-Bangla Film Festival (IBIFF) is a premier platform dedicated to showcasing the finest independent cinema.', 'textarea', 'Vision Text', 'Page - Homepage'],
+            ['mission_image', 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=800', 'image', 'Vision Image', 'Page - Homepage'],
+            
+            ['why_tag', 'Why Join Us?', 'text', 'Why Tag', 'Page - Homepage'],
+            ['why_title', 'A PLATFORM FOR VISIONARIES', 'text', 'Why Title', 'Page - Homepage'],
+            ['why_subtitle', 'Elevate your filmmaking career by participating in a festival that truly values artistic merit, storytelling innovation, and impactful narratives.', 'textarea', 'Why Subtitle', 'Page - Homepage'],
+            ['why_item_1_title', 'International Exposure', 'text', 'Why Item 1 Title', 'Page - Homepage'],
+            ['why_item_1_desc', 'Your film will be showcased to a diverse audience and top industry executives.', 'text', 'Why Item 1 Desc', 'Page - Homepage'],
+            ['why_item_2_title', 'Valuable Networking', 'text', 'Why Item 2 Title', 'Page - Homepage'],
+            ['why_item_2_desc', 'Connect with established directors, producers, and potential distributors.', 'text', 'Why Item 2 Desc', 'Page - Homepage'],
+            ['why_item_3_title', 'Prestigious Awards', 'text', 'Why Item 3 Title', 'Page - Homepage'],
+            ['why_item_3_desc', 'Compete for globally recognized accolades and cash prizes.', 'text', 'Why Item 3 Desc', 'Page - Homepage'],
+            ['why_item_4_title', 'Masterclasses', 'text', 'Why Item 4 Title', 'Page - Homepage'],
+            ['why_item_4_desc', 'Learn from the best in the business through exclusive interactive sessions.', 'text', 'Why Item 4 Desc', 'Page - Homepage'],
+            
+            ['moments_title', 'MOMENTS & MEMORIES', 'text', 'Memories Title', 'Page - Homepage'],
+            ['moments_img_1', 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600', 'image', 'Memory Photo 1', 'Page - Homepage'],
+            ['moments_img_2', 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=600', 'image', 'Memory Photo 2', 'Page - Homepage'],
+            ['moments_img_3', 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=600', 'image', 'Memory Photo 3', 'Page - Homepage'],
+            ['moments_img_4', 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=600', 'image', 'Memory Photo 4', 'Page - Homepage'],
+            
+            ['partner_img_1', '', 'image', 'Partner Logo 1', 'Page - Homepage'],
+            ['partner_img_2', '', 'image', 'Partner Logo 2', 'Page - Homepage'],
+            ['partner_img_3', '', 'image', 'Partner Logo 3', 'Page - Homepage'],
+            ['partner_img_4', '', 'image', 'Partner Logo 4', 'Page - Homepage'],
+            ['partner_img_5', '', 'image', 'Partner Logo 5', 'Page - Homepage'],
+            ['partner_img_6', '', 'image', 'Partner Logo 6', 'Page - Homepage']
+        ];
+        $insertStmt = $db->prepare("INSERT IGNORE INTO site_settings (setting_key, setting_value, setting_type, setting_label, setting_section) VALUES (?, ?, ?, ?, ?)");
+        foreach ($defaultSettings as $ds) {
+            $insertStmt->execute($ds);
+        }
+        // Refresh settings after seeding
+        $stmt = $db->query("SELECT * FROM site_settings ORDER BY setting_section, id");
+        $allSettings = $stmt->fetchAll();
+        $successMessage = "Database seeded automatically! You can now manage settings.";
+    }
+    
     // Group settings by section
     foreach ($allSettings as $setting) {
         $settings[$setting['setting_section']][] = $setting;
