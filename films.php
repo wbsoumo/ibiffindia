@@ -49,7 +49,7 @@ if ($db) {
                 </div>
             <?php else: foreach($films as $film): ?>
             <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up">
-                <a href="film/<?php echo $film['slug']; ?>" class="text-decoration-none">
+                <a href="film-details.php?slug=<?php echo $film['slug']; ?>" class="text-decoration-none">
                     <div class="film-card mb-3 shadow-sm" style="border-radius: 4px; overflow: hidden;">
                         <img src="<?php echo strpos($film['poster'], 'http') === 0 ? $film['poster'] : 'assets/uploads/posters/'.$film['poster']; ?>" 
                              onerror="this.src='https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=800'" 
