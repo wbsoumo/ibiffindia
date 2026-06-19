@@ -50,80 +50,209 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<section class="content"><div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">Add New Film</h2>
-        <a href="index.php" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i> Back</a>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark"><i class="fas fa-film text-warning mr-2"></i>Add New Film</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="../dashboard.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Manage Films</a></li>
+          <li class="breadcrumb-item active">Add Film</li>
+        </ol>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
 
     <?php if($error): ?>
-        <div class="alert alert-danger"><?php echo $error; ?></div>
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="icon fas fa-ban"></i> <?php echo $error; ?>
+        </div>
     <?php endif; ?>
 
-    <div class="card card p-4">
-        <form method="POST" enctype="multipart/form-data">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label fw-bold">Film Title</label>
-                    <input type="text" name="title" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label fw-bold">Director</label>
-                    <input type="text" name="director" class="form-control" required>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label class="form-label fw-bold">Year</label>
-                    <input type="number" name="year" class="form-control" value="2024" required>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label class="form-label fw-bold">Genre</label>
-                    <input type="text" name="genre" class="form-control">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label class="form-label fw-bold">Duration</label>
-                    <input type="text" name="duration" class="form-control" placeholder="e.g., 120 mins">
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label class="form-label fw-bold">Poster Image</label>
-                    <input type="file" name="poster" class="form-control" accept="image/*">
-                    <small class="text-muted">Upload a poster image for the film.</small>
-                </div>
-                
-                <h5 class="fw-bold mt-4 mb-3 border-bottom pb-2">IMDb Style Metadata</h5>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label fw-bold">Writers</label>
-                    <input type="text" name="writers" class="form-control" placeholder="e.g., John Doe, Jane Smith">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label fw-bold">Tagline</label>
-                    <input type="text" name="tagline" class="form-control" placeholder="e.g., No mercy. No shame. No sequel.">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label class="form-label fw-bold">Age Rating</label>
-                    <input type="text" name="age_rating" class="form-control" placeholder="e.g., 18, PG-13">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label class="form-label fw-bold">Rating Score</label>
-                    <input type="number" step="0.1" name="rating_score" class="form-control" placeholder="e.g., 6.3">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label class="form-label fw-bold">Rating Count</label>
-                    <input type="text" name="rating_count" class="form-control" placeholder="e.g., 326K">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label class="form-label fw-bold">Popularity Score</label>
-                    <input type="number" name="popularity_score" class="form-control" placeholder="e.g., 523">
-                </div>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+            <!-- Left Column: Core Info -->
+            <div class="col-md-8">
+                <div class="card card-dark">
+                    <div class="card-header">
+                        <h3 class="card-title">Core Information</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Film Title <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                                </div>
+                                <input type="text" name="title" class="form-control" placeholder="Enter film title" required>
+                            </div>
+                        </div>
 
-                <div class="col-md-12 mb-4">
-                    <label class="form-label fw-bold">Synopsis</label>
-                    <textarea name="synopsis" class="form-control" rows="4"></textarea>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-gold px-4 py-2">Save Film</button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Director <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user-director"></i><i class="fas fa-video"></i></span>
+                                        </div>
+                                        <input type="text" name="director" class="form-control" placeholder="Director name" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Writers</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-pen-nib"></i></span>
+                                        </div>
+                                        <input type="text" name="writers" class="form-control" placeholder="e.g., John Doe, Jane Smith">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Release Year <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="number" name="year" class="form-control" value="<?php echo date('Y'); ?>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Genre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-masks-theater"></i><i class="fas fa-theater-masks"></i></span>
+                                        </div>
+                                        <input type="text" name="genre" class="form-control" placeholder="e.g., Drama, Thriller">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Duration</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                        </div>
+                                        <input type="text" name="duration" class="form-control" placeholder="e.g., 120 mins">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tagline</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-quote-left"></i></span>
+                                </div>
+                                <input type="text" name="tagline" class="form-control" placeholder="Catchy phrase or quote">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Synopsis</label>
+                            <textarea name="synopsis" class="form-control" rows="5" placeholder="Write a compelling synopsis..."></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>
-</div></section>
+
+            <!-- Right Column: Media & Meta -->
+            <div class="col-md-4">
+                <div class="card card-dark">
+                    <div class="card-header">
+                        <h3 class="card-title">Media & Ratings</h3>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="form-group">
+                            <label>Poster Image</label>
+                            <div class="custom-file">
+                                <input type="file" name="poster" class="custom-file-input" id="posterInput" accept="image/*">
+                                <label class="custom-file-label" for="posterInput">Choose file</label>
+                            </div>
+                            <small class="text-muted mt-1 d-block">Recommended size: 600x900 pixels.</small>
+                        </div>
+
+                        <hr>
+                        <label class="text-muted text-uppercase small font-weight-bold">IMDb Style Metadata</label>
+
+                        <div class="form-group mt-2">
+                            <label>Age Rating</label>
+                            <input type="text" name="age_rating" class="form-control" placeholder="e.g., 18, PG-13">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Rating Score</label>
+                                    <div class="input-group">
+                                        <input type="number" step="0.1" name="rating_score" class="form-control" placeholder="6.3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fas fa-star text-warning"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Popularity Score</label>
+                                    <input type="number" name="popularity_score" class="form-control" placeholder="523">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Total Rating Count</label>
+                            <input type="text" name="rating_count" class="form-control" placeholder="e.g., 326K">
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-white text-right">
+                        <a href="index.php" class="btn btn-default mr-2">Cancel</a>
+                        <button type="submit" class="btn btn-warning font-weight-bold"><i class="fas fa-save mr-1"></i> Publish Film</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+  </div>
+</section>
+
+<!-- Custom Script for File Input -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Show selected file name in custom file input
+    var posterInput = document.getElementById('posterInput');
+    if(posterInput) {
+        posterInput.addEventListener('change', function(e){
+            var fileName = e.target.files[0].name;
+            var nextSibling = e.target.nextElementSibling
+            nextSibling.innerText = fileName
+        });
+    }
+});
+</script>
+
 <?php require_once '../includes/footer.php'; ?>
