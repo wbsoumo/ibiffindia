@@ -42,6 +42,7 @@ if ($db) {
                         <td class="fw-bold"><?php echo htmlspecialchars($event['title']); ?></td>
                         <td><?php echo htmlspecialchars($event['venue']); ?></td>
                         <td>
+                            <a href="edit.php?id=<?php echo $event['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></a>
                             <a href="delete.php?id=<?php echo $event['id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this event?');"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>

@@ -15,6 +15,20 @@ $groupedEvents = [];
 foreach ($allEvents as $event) {
     $groupedEvents[$event['event_date']][] = $event;
 }
+
+// Fetch all sponsor logos grouped by event_id
+$logosByEvent = [];
+if ($db) {
+    try {
+        $stmtLogos = $db->query("SELECT * FROM festival_sponsors");
+        $allLogos = $stmtLogos->fetchAll();
+        foreach ($allLogos as $l) {
+            $logosByEvent[$l['festival_id']][] = $l;
+        }
+    } catch (PDOException $e) {
+        // Ignored if table missing
+    }
+}
 ?>
 
 <!-- Cinematic Page Header -->
@@ -79,19 +93,61 @@ foreach ($allEvents as $event) {
                                     <div class="small text-muted text-uppercase fw-bold">GMT+5:30</div>
                                 </div>
                                 <div class="col-md-7">
-                                    <h4 class="fw-bold mb-1"><?php echo $event['title']; ?></h4>
-                                    <div class="d-flex align-items-center text-muted small mb-2">
+                                    <h4 class="fw-bold mb-1"><?php echo htmlspecialchars($event['title']); ?></h4>
+                                    <div class="d-flex align-items-center text-muted small mb-3">
                                         <i class="fas fa-map-marker-alt red me-2"></i> 
-                                        <span class="fw-bold"><?php echo $event['venue']; ?></span>
+                                        <span class="fw-bold"><?php echo htmlspecialchars($event['venue']); ?></span>
                                         <span class="mx-2">|</span>
-                                        <span><?php echo $event['hall']; ?></span>
+                                        <span><?php echo htmlspecialchars($event['hall']); ?></span>
                                     </div>
-                                    <?php if($event['description']): ?>
-                                        <p class="mb-0 text-muted small"><?php echo $event['description']; ?></p>
+                                    
+                                    <?php if(!empty($event['organizer']) || !empty($event['organizer_partner'])): ?>
+                                        <div class="small mb-3 text-secondary fw-bold text-uppercase" style="letter-spacing: 1px;">
+                                            <?php if(!empty($event['organizer'])): ?>
+                                                Organized by: <span class="text-dark"><?php echo htmlspecialchars($event['organizer']); ?></span>
+                                            <?php endif; ?>
+                                            <?php if(!empty($event['organizer_partner'])): ?>
+                                                <span class="mx-2">|</span> Partner: <span class="text-dark"><?php echo htmlspecialchars($event['organizer_partner']); ?></span>
+                                            <?php endif; ?>
+                                        </div>
                                     <?php endif; ?>
+
+                                    <?php if($event['description']): ?>
+                                        <p class="mb-4 text-muted small"><?php echo nl2br(htmlspecialchars($event['description'])); ?></p>
+                                    <?php endif; ?>
+
+                                    <?php if(!empty($event['directions'])): ?>
+                                        <div class="mb-4 p-3 bg-white rounded border-start border-3 border-danger shadow-sm">
+                                            <h6 class="fw-bold mb-1"><i class="fas fa-directions me-2 text-danger"></i>Directions</h6>
+                                            <p class="mb-0 small text-muted"><?php echo nl2br(htmlspecialchars($event['directions'])); ?></p>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if(!empty($event['map_embed_url'])): ?>
+                                        <div class="ratio ratio-21x9 mb-4 rounded overflow-hidden shadow-sm">
+                                            <iframe src="<?php echo htmlspecialchars($event['map_embed_url']); ?>" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <?php if(!empty($logosByEvent[$event['id']])): ?>
+                                        <div class="mt-4 border-top pt-3">
+                                            <h6 class="fw-bold text-muted small text-uppercase mb-3" style="letter-spacing: 1px;">Sponsored By</h6>
+                                            <div class="d-flex flex-wrap gap-3 align-items-center">
+                                                <?php foreach($logosByEvent[$event['id']] as $logo): ?>
+                                                    <img src="<?php echo htmlspecialchars($logo['logo_path']); ?>" alt="Sponsor" class="img-fluid" style="max-height: 50px; opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                                                <?php endforeach; ?>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+
                                 </div>
-                                <div class="col-md-3 text-md-end mt-3 mt-md-0">
-                                    <span class="badge bg-dark p-2 px-3 text-uppercase">Official Event</span>
+                                <div class="col-md-3 text-md-end mt-4 mt-md-0 d-flex flex-column align-items-md-end justify-content-center h-100">
+                                    <span class="badge bg-dark p-2 px-3 text-uppercase mb-3 d-inline-block">Official Event</span>
+                                    <?php if(!empty($event['tickets_url'])): ?>
+                                        <a href="<?php echo htmlspecialchars($event['tickets_url']); ?>" target="_blank" class="btn btn-gold fw-bold px-4 py-2 text-uppercase shadow-sm" style="letter-spacing: 1px; border-radius: 30px;">
+                                            <i class="fas fa-ticket-alt me-2"></i> Buy Tickets
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
