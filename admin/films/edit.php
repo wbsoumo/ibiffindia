@@ -45,13 +45,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $writers = sanitize($_POST['writers'] ?? '');
     $tagline = sanitize($_POST['tagline'] ?? '');
     $trailer_url = sanitize($_POST['trailer_url'] ?? '');
+    
+    // New Extended Fields
+    $directors_statement = sanitize($_POST['directors_statement'] ?? '');
+    $cinematographer = sanitize($_POST['cinematographer'] ?? '');
+    $composer = sanitize($_POST['composer'] ?? '');
+    $editor = sanitize($_POST['editor'] ?? '');
+    $production_company = sanitize($_POST['production_company'] ?? '');
+    $press_quotes = sanitize($_POST['press_quotes'] ?? '');
+    $budget = sanitize($_POST['budget'] ?? '');
+    $filming_locations = sanitize($_POST['filming_locations'] ?? '');
+    $aspect_ratio = sanitize($_POST['aspect_ratio'] ?? '');
+    $sound_mix = sanitize($_POST['sound_mix'] ?? '');
 
     if (empty($title) || empty($director)) {
         $error = "Title and Director are required.";
     } else {
         // Handle Poster Upload
         $posterQuery = "";
-        $params = [$title, $director, $year, $genre, $duration, $synopsis, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url];
+        $params = [
+            $title, $director, $year, $genre, $duration, $synopsis, 
+            $age_rating, $rating_score, $rating_count, $popularity_score, 
+            $writers, $tagline, $trailer_url, $directors_statement, 
+            $cinematographer, $composer, $editor, $production_company, 
+            $press_quotes, $budget, $filming_locations, $aspect_ratio, $sound_mix
+        ];
         
         if (isset($_FILES['poster']) && $_FILES['poster']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = __DIR__ . '/../../assets/uploads/posters/';
@@ -69,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (empty($error) && $db) {
             $params[] = $film_id; // For WHERE clause
-            $stmt = $db->prepare("UPDATE films SET title=?, director=?, year=?, genre=?, duration=?, synopsis=?, age_rating=?, rating_score=?, rating_count=?, popularity_score=?, writers=?, tagline=?, trailer_url=? $posterQuery WHERE id=?");
+            $stmt = $db->prepare("UPDATE films SET title=?, director=?, year=?, genre=?, duration=?, synopsis=?, age_rating=?, rating_score=?, rating_count=?, popularity_score=?, writers=?, tagline=?, trailer_url=?, directors_statement=?, cinematographer=?, composer=?, editor=?, production_company=?, press_quotes=?, budget=?, filming_locations=?, aspect_ratio=?, sound_mix=? $posterQuery WHERE id=?");
             
             if ($stmt->execute($params)) {
                 // Process Album Photos
@@ -264,6 +282,87 @@ try {
                         </div>
                     </div>
                 </div>
+
+                <!-- Extended Crew Card -->
+                <div class="card card-dark mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Extended Cast & Crew</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Cinematographer</label>
+                                    <input type="text" name="cinematographer" class="form-control" value="<?php echo htmlspecialchars($film['cinematographer'] ?? ''); ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Composer / Music</label>
+                                    <input type="text" name="composer" class="form-control" value="<?php echo htmlspecialchars($film['composer'] ?? ''); ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Editor</label>
+                                    <input type="text" name="editor" class="form-control" value="<?php echo htmlspecialchars($film['editor'] ?? ''); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label>Director's Statement / Vision</label>
+                            <textarea name="directors_statement" class="form-control" rows="4"><?php echo htmlspecialchars($film['directors_statement'] ?? ''); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Production Details Card -->
+                <div class="card card-dark mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Production & Press</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Production Company</label>
+                                    <input type="text" name="production_company" class="form-control" value="<?php echo htmlspecialchars($film['production_company'] ?? ''); ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Filming Locations</label>
+                                    <input type="text" name="filming_locations" class="form-control" value="<?php echo htmlspecialchars($film['filming_locations'] ?? ''); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Budget / Box Office</label>
+                                    <input type="text" name="budget" class="form-control" value="<?php echo htmlspecialchars($film['budget'] ?? ''); ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Aspect Ratio</label>
+                                    <input type="text" name="aspect_ratio" class="form-control" value="<?php echo htmlspecialchars($film['aspect_ratio'] ?? ''); ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Sound Mix</label>
+                                    <input type="text" name="sound_mix" class="form-control" value="<?php echo htmlspecialchars($film['sound_mix'] ?? ''); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label>Press & Critic Quotes</label>
+                            <textarea name="press_quotes" class="form-control" rows="3"><?php echo htmlspecialchars($film['press_quotes'] ?? ''); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Right Column: Media & Meta -->

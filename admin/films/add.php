@@ -40,8 +40,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($error) && $db) {
             $trailer_url = sanitize($_POST['trailer_url'] ?? '');
             
-            $stmt = $db->prepare("INSERT INTO films (title, slug, director, year, genre, duration, synopsis, poster, age_rating, rating_score, rating_count, popularity_score, writers, tagline, trailer_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            if ($stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url])) {
+            // New Extended Fields
+            $directors_statement = sanitize($_POST['directors_statement'] ?? '');
+            $cinematographer = sanitize($_POST['cinematographer'] ?? '');
+            $composer = sanitize($_POST['composer'] ?? '');
+            $editor = sanitize($_POST['editor'] ?? '');
+            $production_company = sanitize($_POST['production_company'] ?? '');
+            $press_quotes = sanitize($_POST['press_quotes'] ?? '');
+            $budget = sanitize($_POST['budget'] ?? '');
+            $filming_locations = sanitize($_POST['filming_locations'] ?? '');
+            $aspect_ratio = sanitize($_POST['aspect_ratio'] ?? '');
+            $sound_mix = sanitize($_POST['sound_mix'] ?? '');
+            
+            $stmt = $db->prepare("INSERT INTO films (title, slug, director, year, genre, duration, synopsis, poster, age_rating, rating_score, rating_count, popularity_score, writers, tagline, trailer_url, directors_statement, cinematographer, composer, editor, production_company, press_quotes, budget, filming_locations, aspect_ratio, sound_mix) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            
+            if ($stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url, $directors_statement, $cinematographer, $composer, $editor, $production_company, $press_quotes, $budget, $filming_locations, $aspect_ratio, $sound_mix])) {
                 
                 $film_id = $db->lastInsertId();
 
@@ -204,6 +217,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                 </div>
+
+                <!-- Extended Crew Card -->
+                <div class="card card-dark mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Extended Cast & Crew</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Cinematographer</label>
+                                    <input type="text" name="cinematographer" class="form-control" placeholder="Director of Photography">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Composer / Music</label>
+                                    <input type="text" name="composer" class="form-control" placeholder="Original Score">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Editor</label>
+                                    <input type="text" name="editor" class="form-control" placeholder="Film Editor">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label>Director's Statement / Vision</label>
+                            <textarea name="directors_statement" class="form-control" rows="4" placeholder="Personal message or vision from the director..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Production Details Card -->
+                <div class="card card-dark mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Production & Press</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Production Company</label>
+                                    <input type="text" name="production_company" class="form-control" placeholder="e.g., A24, Warner Bros">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Filming Locations</label>
+                                    <input type="text" name="filming_locations" class="form-control" placeholder="e.g., London, UK; Paris, France">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Budget / Box Office</label>
+                                    <input type="text" name="budget" class="form-control" placeholder="e.g., $15 Million">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Aspect Ratio</label>
+                                    <input type="text" name="aspect_ratio" class="form-control" placeholder="e.g., 2.39:1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Sound Mix</label>
+                                    <input type="text" name="sound_mix" class="form-control" placeholder="e.g., Dolby Atmos">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label>Press & Critic Quotes</label>
+                            <textarea name="press_quotes" class="form-control" rows="3" placeholder="e.g., 'A masterpiece.' - The NY Times"></textarea>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Right Column: Media & Meta -->

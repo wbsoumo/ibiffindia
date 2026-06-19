@@ -201,6 +201,19 @@ if (empty($film['banner'])) {
                 <?php if($film['country']): ?><div class="mb-2"><strong class="text-white">Country:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['country']); ?></span></div><?php endif; ?>
                 <?php if($film['language']): ?><div class="mb-2"><strong class="text-white">Language:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['language']); ?></span></div><?php endif; ?>
             </div>
+
+            <!-- Technical & Production Specs -->
+            <?php if(!empty($film['production_company']) || !empty($film['filming_locations']) || !empty($film['budget']) || !empty($film['aspect_ratio']) || !empty($film['sound_mix'])): ?>
+            <div class="mb-4">
+                <h6 class="text-uppercase text-muted fw-bold border-bottom border-secondary pb-2 mb-3" style="letter-spacing: 2px; font-size: 0.8rem;">Production & Tech</h6>
+                <?php if(!empty($film['production_company'])): ?><div class="mb-2"><strong class="text-white">Company:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['production_company']); ?></span></div><?php endif; ?>
+                <?php if(!empty($film['filming_locations'])): ?><div class="mb-2"><strong class="text-white">Locations:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['filming_locations']); ?></span></div><?php endif; ?>
+                <?php if(!empty($film['budget'])): ?><div class="mb-2"><strong class="text-white">Budget/Box Office:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['budget']); ?></span></div><?php endif; ?>
+                <?php if(!empty($film['aspect_ratio'])): ?><div class="mb-2"><strong class="text-white">Aspect Ratio:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['aspect_ratio']); ?></span></div><?php endif; ?>
+                <?php if(!empty($film['sound_mix'])): ?><div class="mb-2"><strong class="text-white">Sound Mix:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['sound_mix']); ?></span></div><?php endif; ?>
+            </div>
+            <?php endif; ?>
+
         </div>
 
         <!-- Right Content (Trailer, Synopsis, Album) -->
@@ -227,11 +240,47 @@ if (empty($film['banner'])) {
                 <?php echo nl2br(htmlspecialchars($film['synopsis'])); ?>
             </p>
 
-            <?php if (!empty($film['cast'])): ?>
-                <h4 class="text-uppercase fw-bold text-white mb-3" style="letter-spacing: 2px;">Cast</h4>
-                <p class="fs-6 mb-5" style="color: #b0b5c0;">
-                    <?php echo htmlspecialchars($film['cast']); ?>
-                </p>
+            <?php if (!empty($film['directors_statement'])): ?>
+                <div class="mt-4 mb-5 p-4 rounded-4" style="background: rgba(255, 255, 255, 0.02); border-left: 3px solid rgba(255,255,255,0.2);">
+                    <h6 class="text-uppercase fw-bold text-white mb-3" style="letter-spacing: 2px; font-size: 0.85rem;"><i class="fas fa-comment-dots text-secondary me-2"></i>Director's Statement</h6>
+                    <p class="fs-5 fst-italic mb-0" style="color: #c0c5d0; font-family: Georgia, serif;">
+                        "<?php echo nl2br(htmlspecialchars($film['directors_statement'])); ?>"
+                    </p>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($film['cast']) || !empty($film['cinematographer']) || !empty($film['composer']) || !empty($film['editor'])): ?>
+                <h4 class="text-uppercase fw-bold text-white mb-4" style="letter-spacing: 2px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">Cast & Crew</h4>
+                
+                <?php if (!empty($film['cast'])): ?>
+                    <div class="mb-4">
+                        <h6 class="text-uppercase text-muted fw-bold mb-2" style="font-size: 0.75rem; letter-spacing: 1px;">Cast</h6>
+                        <p class="fs-6" style="color: #b0b5c0;">
+                            <?php echo htmlspecialchars($film['cast']); ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+                
+                <div class="row mb-5">
+                    <?php if (!empty($film['cinematographer'])): ?>
+                        <div class="col-md-4 mb-3">
+                            <h6 class="text-uppercase text-muted fw-bold mb-1" style="font-size: 0.75rem; letter-spacing: 1px;">Cinematography</h6>
+                            <div class="text-white"><?php echo htmlspecialchars($film['cinematographer']); ?></div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($film['composer'])): ?>
+                        <div class="col-md-4 mb-3">
+                            <h6 class="text-uppercase text-muted fw-bold mb-1" style="font-size: 0.75rem; letter-spacing: 1px;">Original Score</h6>
+                            <div class="text-white"><?php echo htmlspecialchars($film['composer']); ?></div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($film['editor'])): ?>
+                        <div class="col-md-4 mb-3">
+                            <h6 class="text-uppercase text-muted fw-bold mb-1" style="font-size: 0.75rem; letter-spacing: 1px;">Editor</h6>
+                            <div class="text-white"><?php echo htmlspecialchars($film['editor']); ?></div>
+                        </div>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
 
             <!-- Photo Album Section -->
@@ -252,12 +301,24 @@ if (empty($film['banner'])) {
 
             <!-- Awards Section -->
             <?php if (!empty($film['awards'])): ?>
-                <div class="mt-5 bg-dark-glass p-4 rounded-4 border-start border-4 border-gold mb-5">
+                <div class="mt-5 bg-dark-glass p-4 rounded-4 border-start border-4 border-gold mb-4">
                     <h5 class="text-gold fw-bold mb-3 text-uppercase" style="letter-spacing: 1px;">
                         <i class="fas fa-trophy me-2"></i> Awards & Recognition
                     </h5>
                     <p class="fs-6 mb-0" style="color: #b0b5c0; line-height: 1.8;">
                         <?php echo nl2br(htmlspecialchars($film['awards'])); ?>
+                    </p>
+                </div>
+            <?php endif; ?>
+            
+            <!-- Press Quotes Section -->
+            <?php if (!empty($film['press_quotes'])): ?>
+                <div class="mt-4 mb-5 p-4 rounded-4 bg-dark-glass border border-secondary">
+                    <h5 class="text-white fw-bold mb-3 text-uppercase" style="letter-spacing: 1px;">
+                        <i class="fas fa-newspaper me-2 text-info"></i> Press & Reviews
+                    </h5>
+                    <p class="fs-6 mb-0 fst-italic" style="color: #b0b5c0; line-height: 1.8; font-family: Georgia, serif;">
+                        <?php echo nl2br(htmlspecialchars($film['press_quotes'])); ?>
                     </p>
                 </div>
             <?php endif; ?>
