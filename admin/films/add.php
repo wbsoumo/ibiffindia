@@ -54,7 +54,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $stmt = $db->prepare("INSERT INTO films (title, slug, director, year, genre, duration, synopsis, poster, age_rating, rating_score, rating_count, popularity_score, writers, tagline, trailer_url, directors_statement, cinematographer, composer, editor, production_company, press_quotes, budget, filming_locations, aspect_ratio, sound_mix) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
-            if ($stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url, $directors_statement, $cinematographer, $composer, $editor, $production_company, $press_quotes, $budget, $filming_locations, $aspect_ratio, $sound_mix])) {
+            try {
+                $success = $stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url, $directors_statement, $cinematographer, $composer, $editor, $production_company, $press_quotes, $budget, $filming_locations, $aspect_ratio, $sound_mix]);
+            } catch (PDOException $e) {
+                if ($e->getCode() == '42S22') {
+                    $columns = [
+                        'directors_statement' => 'TEXT', 'cinematographer' => 'VARCHAR(255)',
+                        'composer' => 'VARCHAR(255)', 'editor' => 'VARCHAR(255)',
+                        'production_company' => 'VARCHAR(255)', 'press_quotes' => 'TEXT',
+                        'budget' => 'VARCHAR(100)', 'filming_locations' => 'VARCHAR(255)',
+                        'aspect_ratio' => 'VARCHAR(50)', 'sound_mix' => 'VARCHAR(100)'
+                    ];
+                    foreach ($columns as $col => $type) {
+                        try {
+                            $db->exec("ALTER TABLE films ADD COLUMN $col $type");
+                        } catch (PDOException $e2) { }
+                    }
+                    $success = $stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url, $directors_statement, $cinematographer, $composer, $editor, $production_company, $press_quotes, $budget, $filming_locations, $aspect_ratio, $sound_mix]);
+                } else {
+                    $success = false;
+                }
+            }
+            
+            if ($success) {
                 
                 $film_id = $db->lastInsertId();
 
