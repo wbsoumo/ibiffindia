@@ -126,8 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="url" name="tickets_url" class="form-control" placeholder="https://...">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label class="form-label fw-bold">Google Map Embed URL</label>
-                    <input type="url" name="map_embed_url" class="form-control" placeholder="https://www.google.com/maps/embed?...">
+                    <label class="form-label fw-bold">Google Map URL</label>
+                    <input type="url" name="map_embed_url" class="form-control" placeholder="Embed URL or Regular Link">
+                    <small class="text-muted">Supports <code>google.com/maps/embed</code> or regular links.</small>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold">Venue Name</label>

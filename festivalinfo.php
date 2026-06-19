@@ -123,11 +123,32 @@ if ($db) {
                                         </div>
                                     <?php endif; ?>
 
-                                    <?php if(!empty($event['map_embed_url'])): ?>
+                                    <?php if(!empty($event['map_embed_url'])): 
+                                        $mapUrl = $event['map_embed_url'];
+                                        if (strpos($mapUrl, 'google.com/maps/embed') !== false) {
+                                    ?>
                                         <div class="ratio ratio-21x9 mb-4 rounded overflow-hidden shadow-sm">
-                                            <iframe src="<?php echo htmlspecialchars($event['map_embed_url']); ?>" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                            <iframe src="<?php echo htmlspecialchars($mapUrl); ?>" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                         </div>
-                                    <?php endif; ?>
+                                    <?php } else { ?>
+                                        <div class="mb-4">
+                                            <a href="<?php echo htmlspecialchars($mapUrl); ?>" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm">
+                                                <i class="fas fa-map-marker-alt me-2"></i> View on Google Maps
+                                            </a>
+                                        </div>
+                                    <?php } endif; ?>
+                                    
+                                    <!-- Social Share Buttons -->
+                                    <div class="mt-4 pt-3 d-flex align-items-center gap-2">
+                                        <span class="small fw-bold text-muted text-uppercase me-2" style="letter-spacing: 1px;">Share:</span>
+                                        <?php
+                                        $shareUrl = urlencode("https://www.ibiffindia.com/festivalinfo.php");
+                                        $shareTitle = urlencode($event['title'] . " at IBIFF India");
+                                        ?>
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $shareUrl; ?>" target="_blank" class="btn btn-sm btn-light border shadow-sm text-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; line-height: 30px;"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="https://twitter.com/intent/tweet?url=<?php echo $shareUrl; ?>&text=<?php echo $shareTitle; ?>" target="_blank" class="btn btn-sm btn-light border shadow-sm text-info rounded-circle" style="width: 32px; height: 32px; padding: 0; line-height: 30px;"><i class="fab fa-twitter"></i></a>
+                                        <a href="https://wa.me/?text=<?php echo $shareTitle; ?>%20<?php echo $shareUrl; ?>" target="_blank" class="btn btn-sm btn-light border shadow-sm text-success rounded-circle" style="width: 32px; height: 32px; padding: 0; line-height: 30px;"><i class="fab fa-whatsapp"></i></a>
+                                    </div>
                                     
                                     <?php if(!empty($logosByEvent[$event['id']])): ?>
                                         <div class="mt-4 border-top pt-3">
