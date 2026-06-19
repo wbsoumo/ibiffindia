@@ -52,9 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $aspect_ratio = sanitize($_POST['aspect_ratio'] ?? '');
             $sound_mix = sanitize($_POST['sound_mix'] ?? '');
             
-            $stmt = $db->prepare("INSERT INTO films (title, slug, director, year, genre, duration, synopsis, poster, age_rating, rating_score, rating_count, popularity_score, writers, tagline, trailer_url, directors_statement, cinematographer, composer, editor, production_company, press_quotes, budget, filming_locations, aspect_ratio, sound_mix) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            
             try {
+                $stmt = $db->prepare("INSERT INTO films (title, slug, director, year, genre, duration, synopsis, poster, age_rating, rating_score, rating_count, popularity_score, writers, tagline, trailer_url, directors_statement, cinematographer, composer, editor, production_company, press_quotes, budget, filming_locations, aspect_ratio, sound_mix) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $success = $stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url, $directors_statement, $cinematographer, $composer, $editor, $production_company, $press_quotes, $budget, $filming_locations, $aspect_ratio, $sound_mix]);
             } catch (PDOException $e) {
                 if ($e->getCode() == '42S22') {
@@ -70,8 +69,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $db->exec("ALTER TABLE films ADD COLUMN $col $type");
                         } catch (PDOException $e2) { }
                     }
-                    $success = $stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url, $directors_statement, $cinematographer, $composer, $editor, $production_company, $press_quotes, $budget, $filming_locations, $aspect_ratio, $sound_mix]);
+                    try {
+                        $stmt = $db->prepare("INSERT INTO films (title, slug, director, year, genre, duration, synopsis, poster, age_rating, rating_score, rating_count, popularity_score, writers, tagline, trailer_url, directors_statement, cinematographer, composer, editor, production_company, press_quotes, budget, filming_locations, aspect_ratio, sound_mix) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $success = $stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url, $directors_statement, $cinematographer, $composer, $editor, $production_company, $press_quotes, $budget, $filming_locations, $aspect_ratio, $sound_mix]);
+                    } catch (PDOException $e3) {
+                        $error = "DB Error: " . $e3->getMessage();
+                        $success = false;
+                    }
                 } else {
+                    $error = "DB Error: " . $e->getMessage();
                     $success = false;
                 }
             }

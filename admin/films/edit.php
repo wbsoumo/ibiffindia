@@ -87,9 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (empty($error) && $db) {
             $params[] = $film_id; // For WHERE clause
-            $stmt = $db->prepare("UPDATE films SET title=?, director=?, year=?, genre=?, duration=?, synopsis=?, age_rating=?, rating_score=?, rating_count=?, popularity_score=?, writers=?, tagline=?, trailer_url=?, directors_statement=?, cinematographer=?, composer=?, editor=?, production_company=?, press_quotes=?, budget=?, filming_locations=?, aspect_ratio=?, sound_mix=? $posterQuery WHERE id=?");
-            
             try {
+                $stmt = $db->prepare("UPDATE films SET title=?, director=?, year=?, genre=?, duration=?, synopsis=?, age_rating=?, rating_score=?, rating_count=?, popularity_score=?, writers=?, tagline=?, trailer_url=?, directors_statement=?, cinematographer=?, composer=?, editor=?, production_company=?, press_quotes=?, budget=?, filming_locations=?, aspect_ratio=?, sound_mix=? $posterQuery WHERE id=?");
                 $success = $stmt->execute($params);
             } catch (PDOException $e) {
                 // If columns are missing (SQLSTATE 42S22), auto-migrate the table
@@ -107,8 +106,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         } catch (PDOException $e2) { } // Ignore if already exists
                     }
                     // Retry execution after migration
-                    $success = $stmt->execute($params);
+                    try {
+                        $stmt = $db->prepare("UPDATE films SET title=?, director=?, year=?, genre=?, duration=?, synopsis=?, age_rating=?, rating_score=?, rating_count=?, popularity_score=?, writers=?, tagline=?, trailer_url=?, directors_statement=?, cinematographer=?, composer=?, editor=?, production_company=?, press_quotes=?, budget=?, filming_locations=?, aspect_ratio=?, sound_mix=? $posterQuery WHERE id=?");
+                        $success = $stmt->execute($params);
+                    } catch (PDOException $e3) {
+                        $error = "DB Error: " . $e3->getMessage();
+                        $success = false;
+                    }
                 } else {
+                    $error = "DB Error: " . $e->getMessage();
                     $success = false;
                 }
             }
