@@ -460,7 +460,7 @@ if ($db) {
             
             <!-- Laurels Graphic Emblem -->
             <div class="laurels-emblem py-3">
-                <img src="https://static.wixstatic.com/media/494556_5657154e08d94af48e968ec8625994f2~mv2.png" alt="Laurels emblem" class="laurels-header-icon img-fluid">
+                <img src="assets/images/award-logo.png" alt="Award emblem" class="laurels-header-icon img-fluid" style="max-height: 200px;">
             </div>
         </div>
         
