@@ -24,9 +24,22 @@ if (!$film) {
 }
 
 // Fetch Album Photos
-$stmtPhotos = $db->prepare("SELECT photo_path FROM film_photos WHERE film_id = ? ORDER BY created_at ASC");
-$stmtPhotos->execute([$film['id']]);
-$album_photos = $stmtPhotos->fetchAll(PDO::FETCH_COLUMN);
+$album_photos = [];
+try {
+    $stmtPhotos = $db->prepare("SELECT photo_path FROM film_photos WHERE film_id = ? ORDER BY created_at ASC");
+    if ($stmtPhotos) {
+        $stmtPhotos->execute([$film['id']]);
+        $album_photos = $stmtPhotos->fetchAll(PDO::FETCH_COLUMN);
+    }
+} catch (PDOException $e) {
+    // If table doesn't exist, auto-create it to prevent 500 error
+    $db->exec("CREATE TABLE IF NOT EXISTS film_photos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        film_id INT NOT NULL,
+        photo_path VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+}
 
 $pageTitle = $film['title'];
 require_once 'includes/header.php';

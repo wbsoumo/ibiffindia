@@ -11,17 +11,23 @@ if (!$film_id) {
 // Handle Photo Deletion
 if (isset($_GET['delete_photo'])) {
     $photo_id = (int)$_GET['delete_photo'];
-    $stmt = $db->prepare("SELECT photo_path FROM film_photos WHERE id = ? AND film_id = ?");
-    $stmt->execute([$photo_id, $film_id]);
-    $photo = $stmt->fetch();
-    if ($photo) {
-        $filePath = __DIR__ . '/../../' . $photo['photo_path'];
-        if (file_exists($filePath)) {
-            unlink($filePath);
+    try {
+        $stmt = $db->prepare("SELECT photo_path FROM film_photos WHERE id = ? AND film_id = ?");
+        if ($stmt) {
+            $stmt->execute([$photo_id, $film_id]);
+            $photo = $stmt->fetch();
+            if ($photo) {
+                $filePath = __DIR__ . '/../../' . $photo['photo_path'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+                $db->prepare("DELETE FROM film_photos WHERE id = ?")->execute([$photo_id]);
+                setFlash('success', 'Photo deleted successfully.');
+                redirect('edit.php?id=' . $film_id);
+            }
         }
-        $db->prepare("DELETE FROM film_photos WHERE id = ?")->execute([$photo_id]);
-        setFlash('success', 'Photo deleted successfully.');
-        redirect('edit.php?id=' . $film_id);
+    } catch (PDOException $e) {
+        // Table doesn't exist yet
     }
 }
 
@@ -107,9 +113,22 @@ if (!$film) {
     redirect('index.php');
 }
 
-$stmt = $db->prepare("SELECT * FROM film_photos WHERE film_id = ? ORDER BY created_at DESC");
-$stmt->execute([$film_id]);
-$photos = $stmt->fetchAll();
+$photos = [];
+try {
+    $stmt = $db->prepare("SELECT * FROM film_photos WHERE film_id = ? ORDER BY created_at DESC");
+    if ($stmt) {
+        $stmt->execute([$film_id]);
+        $photos = $stmt->fetchAll();
+    }
+} catch (PDOException $e) {
+    // If table doesn't exist, auto-create it
+    $db->exec("CREATE TABLE IF NOT EXISTS film_photos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        film_id INT NOT NULL,
+        photo_path VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+}
 
 ?>
 
