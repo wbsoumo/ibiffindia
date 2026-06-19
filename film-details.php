@@ -92,9 +92,22 @@ if (empty($film['banner'])) {
         border-radius: 10px;
         box-shadow: 0 15px 40px rgba(0,0,0,0.8);
         border: 1px solid rgba(255,255,255,0.1);
-        margin-top: -150px;
         position: relative;
         z-index: 3;
+    }
+    @media (min-width: 992px) {
+        .film-poster {
+            margin-top: -150px;
+        }
+    }
+    @media (max-width: 991px) {
+        .film-poster {
+            margin-top: -80px;
+            max-width: 220px;
+        }
+        .hero-content {
+            padding-bottom: 6rem;
+        }
     }
     .text-gold { color: #d4af37; }
     .bg-dark-glass {
@@ -161,7 +174,7 @@ if (empty($film['banner'])) {
         
         <!-- Left Sidebar (Poster & Quick Stats) -->
         <div class="col-lg-3 text-center text-lg-start">
-            <img src="<?php echo htmlspecialchars($posterUrl); ?>" class="film-poster mb-4 d-none d-lg-block" alt="Poster">
+            <img src="<?php echo htmlspecialchars($posterUrl); ?>" class="film-poster mb-4 mx-auto" alt="Poster">
             
             <div class="bg-dark-glass p-4 rounded-4 mb-4 text-center">
                 <div class="d-flex justify-content-around align-items-center mb-3">
@@ -184,6 +197,7 @@ if (empty($film['banner'])) {
                 <h6 class="text-uppercase text-muted fw-bold border-bottom border-secondary pb-2 mb-3" style="letter-spacing: 2px; font-size: 0.8rem;">Info</h6>
                 <div class="mb-2"><strong class="text-white">Director:</strong> <span class="text-gold"><?php echo htmlspecialchars($film['director']); ?></span></div>
                 <?php if($film['writers']): ?><div class="mb-2"><strong class="text-white">Writers:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['writers']); ?></span></div><?php endif; ?>
+                <?php if($film['producer']): ?><div class="mb-2"><strong class="text-white">Producer:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['producer']); ?></span></div><?php endif; ?>
                 <?php if($film['country']): ?><div class="mb-2"><strong class="text-white">Country:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['country']); ?></span></div><?php endif; ?>
                 <?php if($film['language']): ?><div class="mb-2"><strong class="text-white">Language:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['language']); ?></span></div><?php endif; ?>
             </div>
@@ -233,6 +247,18 @@ if (empty($film['banner'])) {
                             </a>
                         </div>
                     <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+            <!-- Awards Section -->
+            <?php if (!empty($film['awards'])): ?>
+                <div class="mt-5 bg-dark-glass p-4 rounded-4 border-start border-4 border-gold mb-5">
+                    <h5 class="text-gold fw-bold mb-3 text-uppercase" style="letter-spacing: 1px;">
+                        <i class="fas fa-trophy me-2"></i> Awards & Recognition
+                    </h5>
+                    <p class="fs-6 mb-0" style="color: #b0b5c0; line-height: 1.8;">
+                        <?php echo nl2br(htmlspecialchars($film['awards'])); ?>
+                    </p>
                 </div>
             <?php endif; ?>
 
