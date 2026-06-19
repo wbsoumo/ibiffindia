@@ -1,9 +1,30 @@
 <?php 
 require_once '../includes/header.php';
 
-
-
 $error = '';
+$film_id = $_GET['id'] ?? null;
+
+if (!$film_id) {
+    redirect('index.php');
+}
+
+// Handle Photo Deletion
+if (isset($_GET['delete_photo'])) {
+    $photo_id = (int)$_GET['delete_photo'];
+    $stmt = $db->prepare("SELECT photo_path FROM film_photos WHERE id = ? AND film_id = ?");
+    $stmt->execute([$photo_id, $film_id]);
+    $photo = $stmt->fetch();
+    if ($photo) {
+        $filePath = __DIR__ . '/../../' . $photo['photo_path'];
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+        $db->prepare("DELETE FROM film_photos WHERE id = ?")->execute([$photo_id]);
+        setFlash('success', 'Photo deleted successfully.');
+        redirect('edit.php?id=' . $film_id);
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = sanitize($_POST['title']);
     $director = sanitize($_POST['director']);
@@ -17,34 +38,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $popularity_score = intval($_POST['popularity_score'] ?? 0);
     $writers = sanitize($_POST['writers'] ?? '');
     $tagline = sanitize($_POST['tagline'] ?? '');
-    $poster = ''; // Will handle file upload below
-    $slug = createSlug($title) . '-' . time();
+    $trailer_url = sanitize($_POST['trailer_url'] ?? '');
 
     if (empty($title) || empty($director)) {
         $error = "Title and Director are required.";
     } else {
-        // Handle File Upload
+        // Handle Poster Upload
+        $posterQuery = "";
+        $params = [$title, $director, $year, $genre, $duration, $synopsis, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url];
+        
         if (isset($_FILES['poster']) && $_FILES['poster']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = __DIR__ . '/../../assets/uploads/posters/';
             $fileExtension = pathinfo($_FILES['poster']['name'], PATHINFO_EXTENSION);
-            $newFileName = $slug . '.' . $fileExtension;
+            $newFileName = createSlug($title) . '-' . time() . '.' . $fileExtension;
             $uploadFilePath = $uploadDir . $newFileName;
             
             if (move_uploaded_file($_FILES['poster']['tmp_name'], $uploadFilePath)) {
-                $poster = $newFileName;
+                $posterQuery = ", poster = ?";
+                $params[] = $newFileName;
             } else {
                 $error = "Failed to upload poster image.";
             }
         }
         
         if (empty($error) && $db) {
-            $trailer_url = sanitize($_POST['trailer_url'] ?? '');
+            $params[] = $film_id; // For WHERE clause
+            $stmt = $db->prepare("UPDATE films SET title=?, director=?, year=?, genre=?, duration=?, synopsis=?, age_rating=?, rating_score=?, rating_count=?, popularity_score=?, writers=?, tagline=?, trailer_url=? $posterQuery WHERE id=?");
             
-            $stmt = $db->prepare("INSERT INTO films (title, slug, director, year, genre, duration, synopsis, poster, age_rating, rating_score, rating_count, popularity_score, writers, tagline, trailer_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            if ($stmt->execute([$title, $slug, $director, $year, $genre, $duration, $synopsis, $poster, $age_rating, $rating_score, $rating_count, $popularity_score, $writers, $tagline, $trailer_url])) {
-                
-                $film_id = $db->lastInsertId();
-
+            if ($stmt->execute($params)) {
                 // Process Album Photos
                 if (isset($_FILES['album_photos'])) {
                     $albumDir = __DIR__ . '/../../assets/uploads/albums/';
@@ -59,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
                             
                             if (in_array($fileExt, $allowedExts)) {
-                                $newPhotoName = $slug . '-album-' . time() . '-' . $key . '.' . $fileExt;
+                                $newPhotoName = createSlug($title) . '-album-' . time() . '-' . $key . '.' . $fileExt;
                                 $targetPath = $albumDir . $newPhotoName;
                                 if (move_uploaded_file($tmpName, $targetPath)) {
                                     $stmtPhoto->execute([$film_id, 'assets/uploads/albums/' . $newPhotoName]);
@@ -69,14 +90,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
 
-                setFlash('success', 'Film added successfully.');
+                setFlash('success', 'Film updated successfully.');
                 redirect('index.php');
             } else {
-                $error = "Failed to add film to database.";
+                $error = "Failed to update film.";
             }
         }
     }
 }
+
+$stmt = $db->prepare("SELECT * FROM films WHERE id = ?");
+$stmt->execute([$film_id]);
+$film = $stmt->fetch();
+
+if (!$film) {
+    redirect('index.php');
+}
+
+$stmt = $db->prepare("SELECT * FROM film_photos WHERE film_id = ? ORDER BY created_at DESC");
+$stmt->execute([$film_id]);
+$photos = $stmt->fetchAll();
+
 ?>
 
 <!-- Content Header (Page header) -->
@@ -84,13 +118,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark"><i class="fas fa-film text-warning mr-2"></i>Add New Film</h1>
+        <h1 class="m-0 text-dark"><i class="fas fa-edit text-warning mr-2"></i>Edit Film</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="../dashboard.php">Home</a></li>
           <li class="breadcrumb-item"><a href="index.php">Manage Films</a></li>
-          <li class="breadcrumb-item active">Add Film</li>
+          <li class="breadcrumb-item active">Edit Film</li>
         </ol>
       </div>
     </div>
@@ -100,6 +134,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
+
+    <?php if($msg = getFlash('success')): ?>
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="icon fas fa-check"></i> <?php echo $msg; ?>
+        </div>
+    <?php endif; ?>
 
     <?php if($error): ?>
         <div class="alert alert-danger alert-dismissible">
@@ -123,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-heading"></i></span>
                                 </div>
-                                <input type="text" name="title" class="form-control" placeholder="Enter film title" required>
+                                <input type="text" name="title" class="form-control" value="<?php echo htmlspecialchars($film['title']); ?>" required>
                             </div>
                         </div>
 
@@ -135,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user-director"></i><i class="fas fa-video"></i></span>
                                         </div>
-                                        <input type="text" name="director" class="form-control" placeholder="Director name" required>
+                                        <input type="text" name="director" class="form-control" value="<?php echo htmlspecialchars($film['director']); ?>" required>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-pen-nib"></i></span>
                                         </div>
-                                        <input type="text" name="writers" class="form-control" placeholder="e.g., John Doe, Jane Smith">
+                                        <input type="text" name="writers" class="form-control" value="<?php echo htmlspecialchars($film['writers'] ?? ''); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="number" name="year" class="form-control" value="<?php echo date('Y'); ?>" required>
+                                        <input type="number" name="year" class="form-control" value="<?php echo htmlspecialchars($film['year']); ?>" required>
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-masks-theater"></i><i class="fas fa-theater-masks"></i></span>
                                         </div>
-                                        <input type="text" name="genre" class="form-control" placeholder="e.g., Drama, Thriller">
+                                        <input type="text" name="genre" class="form-control" value="<?php echo htmlspecialchars($film['genre'] ?? ''); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-clock"></i></span>
                                         </div>
-                                        <input type="text" name="duration" class="form-control" placeholder="e.g., 120 mins">
+                                        <input type="text" name="duration" class="form-control" value="<?php echo htmlspecialchars($film['duration'] ?? ''); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -194,13 +235,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-quote-left"></i></span>
                                 </div>
-                                <input type="text" name="tagline" class="form-control" placeholder="Catchy phrase or quote">
+                                <input type="text" name="tagline" class="form-control" value="<?php echo htmlspecialchars($film['tagline'] ?? ''); ?>">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>Synopsis</label>
-                            <textarea name="synopsis" class="form-control" rows="5" placeholder="Write a compelling synopsis..."></textarea>
+                            <textarea name="synopsis" class="form-control" rows="5"><?php echo htmlspecialchars($film['synopsis'] ?? ''); ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -214,10 +255,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="card-body">
                         
+                        <?php if ($film['poster']): ?>
+                        <div class="mb-3 text-center">
+                            <img src="../../assets/uploads/posters/<?php echo htmlspecialchars($film['poster']); ?>" class="img-thumbnail" style="max-height: 150px;">
+                        </div>
+                        <?php endif; ?>
+
                         <div class="form-group">
-                            <label>Poster Image <span class="text-danger">*</span></label>
+                            <label>Update Poster Image</label>
                             <div class="custom-file">
-                                <input type="file" name="poster" class="custom-file-input" id="posterInput" accept="image/*" required>
+                                <input type="file" name="poster" class="custom-file-input" id="posterInput" accept="image/*">
                                 <label class="custom-file-label" for="posterInput">Choose file</label>
                             </div>
                             <small class="text-muted mt-1 d-block">Recommended size: 600x900 pixels.</small>
@@ -229,18 +276,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fab fa-youtube text-danger"></i></span>
                                 </div>
-                                <input type="url" name="trailer_url" class="form-control" placeholder="https://youtube.com/watch?v=...">
+                                <input type="url" name="trailer_url" class="form-control" value="<?php echo htmlspecialchars($film['trailer_url'] ?? ''); ?>">
                             </div>
                             <small class="text-muted mt-1 d-block">YouTube link or direct video URL.</small>
                         </div>
 
-                        <div class="form-group mt-3">
-                            <label>Album Photos</label>
+                        <div class="form-group mt-3 border p-3 bg-light rounded">
+                            <label><i class="fas fa-images mr-1"></i> Album Photos</label>
+                            <?php if (!empty($photos)): ?>
+                                <div class="d-flex flex-wrap gap-2 mb-3" style="gap: 10px;">
+                                    <?php foreach ($photos as $p): ?>
+                                    <div class="position-relative" style="width: 80px; height: 80px;">
+                                        <img src="../../<?php echo htmlspecialchars($p['photo_path']); ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+                                        <a href="edit.php?id=<?php echo $film['id']; ?>&delete_photo=<?php echo $p['id']; ?>" class="btn btn-danger btn-xs position-absolute" style="top: -5px; right: -5px; border-radius: 50%;" onclick="return confirm('Delete this photo?');"><i class="fas fa-times"></i></a>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+
                             <div class="custom-file">
                                 <input type="file" name="album_photos[]" class="custom-file-input" id="albumInput" accept="image/*" multiple>
-                                <label class="custom-file-label" for="albumInput">Choose multiple files...</label>
+                                <label class="custom-file-label" for="albumInput">Add multiple photos...</label>
                             </div>
-                            <small class="text-muted mt-1 d-block">Upload multiple photos for the film gallery.</small>
                         </div>
 
                         <hr>
@@ -248,7 +305,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="form-group mt-2">
                             <label>Age Rating</label>
-                            <input type="text" name="age_rating" class="form-control" placeholder="e.g., 18, PG-13">
+                            <input type="text" name="age_rating" class="form-control" value="<?php echo htmlspecialchars($film['age_rating'] ?? ''); ?>">
                         </div>
 
                         <div class="row">
@@ -256,7 +313,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="form-group">
                                     <label>Rating Score</label>
                                     <div class="input-group">
-                                        <input type="number" step="0.1" name="rating_score" class="form-control" placeholder="6.3">
+                                        <input type="number" step="0.1" name="rating_score" class="form-control" value="<?php echo htmlspecialchars($film['rating_score'] ?? ''); ?>">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fas fa-star text-warning"></i></span>
                                         </div>
@@ -266,20 +323,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Popularity Score</label>
-                                    <input type="number" name="popularity_score" class="form-control" placeholder="523">
+                                    <input type="number" name="popularity_score" class="form-control" value="<?php echo htmlspecialchars($film['popularity_score'] ?? ''); ?>">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>Total Rating Count</label>
-                            <input type="text" name="rating_count" class="form-control" placeholder="e.g., 326K">
+                            <input type="text" name="rating_count" class="form-control" value="<?php echo htmlspecialchars($film['rating_count'] ?? ''); ?>">
                         </div>
 
                     </div>
                     <div class="card-footer bg-white text-right">
                         <a href="index.php" class="btn btn-default mr-2">Cancel</a>
-                        <button type="submit" class="btn btn-warning font-weight-bold"><i class="fas fa-save mr-1"></i> Publish Film</button>
+                        <button type="submit" class="btn btn-warning font-weight-bold"><i class="fas fa-save mr-1"></i> Update Film</button>
                     </div>
                 </div>
             </div>
@@ -315,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (filesCount === 1) {
                 nextSibling.innerText = e.target.files[0].name;
             } else {
-                nextSibling.innerText = 'Choose multiple files...';
+                nextSibling.innerText = 'Add multiple photos...';
             }
         });
     }

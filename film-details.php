@@ -23,11 +23,16 @@ if (!$film) {
     redirect('films.php');
 }
 
+// Fetch Album Photos
+$stmtPhotos = $db->prepare("SELECT photo_path FROM film_photos WHERE film_id = ? ORDER BY created_at ASC");
+$stmtPhotos->execute([$film['id']]);
+$album_photos = $stmtPhotos->fetchAll(PDO::FETCH_COLUMN);
+
 $pageTitle = $film['title'];
 require_once 'includes/header.php';
 require_once 'includes/navbar.php';
 
-// Reload CSS with absolute path to fix /film/slug URL rewriting issue
+// Reload CSS with absolute path
 echo '<link rel="stylesheet" href="' . SITE_URL . '/assets/css/style.css">';
 echo '<link rel="stylesheet" href="' . SITE_URL . '/assets/css/responsive.css">';
 
@@ -37,283 +42,189 @@ $yt_id = "";
 if (preg_match('/(embed\/|v=)([^&?]+)/', $yt_url, $matches)) {
     $yt_id = $matches[2];
 }
+$posterUrl = strpos($film['poster'], 'http') === 0 ? $film['poster'] : 'assets/uploads/posters/' . $film['poster'];
+$bannerUrl = strpos($film['banner'], 'http') === 0 ? $film['banner'] : 'assets/uploads/films/' . $film['banner'];
+if (empty($film['banner'])) {
+    $bannerUrl = "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920"; // Default cinematic backdrop
+}
 ?>
 
-<div class="bg-black text-white pb-5" style="min-height: 100vh; padding-top: 120px;">
-    <!-- Title Header -->
-    <div class="container mb-4" data-aos="fade-in">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end">
-            <div>
-                <h1 class="display-4 fw-bold mb-1" style="font-family: 'Barlow', sans-serif;">
-                    <?php echo $film['title']; ?></h1>
-                <ul class="list-inline text-muted small fw-bold text-uppercase mb-0" style="letter-spacing: 1px;">
-                    <li class="list-inline-item"><?php echo $film['year']; ?></li>
-                    <li class="list-inline-item">•</li>
+<style>
+    body { background-color: #080a0e; color: #f0f0f0; }
+    .film-hero {
+        position: relative;
+        height: 70vh;
+        min-height: 500px;
+        background-size: cover;
+        background-position: center top;
+        background-attachment: fixed;
+    }
+    .film-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(8, 10, 14, 0.3) 0%, rgba(8, 10, 14, 1) 100%);
+    }
+    .hero-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-bottom: 3rem;
+        z-index: 2;
+    }
+    .film-poster {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 10px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        border: 1px solid rgba(255,255,255,0.1);
+        margin-top: -150px;
+        position: relative;
+        z-index: 3;
+    }
+    .text-gold { color: #d4af37; }
+    .bg-dark-glass {
+        background: rgba(20, 24, 30, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.1); }
+    .album-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+    .album-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+    .trailer-container {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+</style>
+
+<!-- Hero Backdrop -->
+<div class="film-hero" style="background-image: url('<?php echo htmlspecialchars($bannerUrl); ?>');">
+    <div class="hero-content container">
+        <div class="row">
+            <div class="col-lg-3 d-none d-lg-block"></div> <!-- Spacer for poster -->
+            <div class="col-lg-9 text-center text-lg-start">
+                <h1 class="display-3 fw-bold text-white mb-2" style="font-family: 'Cinzel', serif; letter-spacing: 2px;">
+                    <?php echo htmlspecialchars($film['title']); ?>
+                </h1>
+                
+                <div class="d-flex flex-wrap justify-content-center justify-content-lg-start align-items-center gap-3 mb-3 text-uppercase small fw-bold" style="letter-spacing: 1px; color: #a0a5b0;">
+                    <span><?php echo $film['year']; ?></span>
                     <?php if (!empty($film['age_rating'])): ?>
-                        <li class="list-inline-item"><?php echo $film['age_rating']; ?></li>
-                        <li class="list-inline-item">•</li>
+                        <span>•</span>
+                        <span class="border border-secondary px-2 rounded"><?php echo $film['age_rating']; ?></span>
                     <?php endif; ?>
-                    <li class="list-inline-item"><?php echo $film['duration']; ?></li>
-                    <li class="list-inline-item">•</li>
-                    <li class="list-inline-item text-white border border-secondary px-2 rounded-1">
-                        <?php echo $film['genre']; ?></li>
-                </ul>
-            </div>
-            <div class="mt-3 mt-md-0 text-md-end">
-                <div class="d-flex align-items-center gap-4">
-                    <div class="text-center d-none d-md-block">
-                        <div class="text-muted small text-uppercase fw-bold" style="letter-spacing: 1px;">IMDb Rating
-                        </div>
-                        <div class="h5 mb-0 fw-bold text-white"><i class="fas fa-star text-warning me-1"></i>
-                            <?php echo $film['rating_score'] ?: 'N/A'; ?> <span
-                                class="text-muted fs-6 fw-normal">/10</span></div>
-                        <small class="text-muted"
-                            style="font-size: 0.75rem;"><?php echo $film['rating_count'] ?: '—'; ?></small>
-                    </div>
-                    <div class="vr bg-secondary opacity-25 d-none d-md-block" style="height:50px;"></div>
-                    <div class="text-center d-none d-md-block">
-                        <div class="text-muted small text-uppercase fw-bold" style="letter-spacing: 1px;">Your Rating
-                        </div>
-                        <div class="h5 mb-0 fw-bold" style="color:#4da6ff; cursor:pointer;"><i
-                                class="far fa-star me-1"></i> Rate</div>
-                        <small class="text-muted" style="font-size: 0.75rem;">Add yours</small>
-                    </div>
-                    <div class="vr bg-secondary opacity-25 d-none d-md-block" style="height:50px;"></div>
-                    <div class="text-center d-none d-md-block">
-                        <div class="text-muted small text-uppercase fw-bold" style="letter-spacing: 1px;">Popularity
-                        </div>
-                        <div class="h5 mb-0 fw-bold text-white"><i class="fas fa-arrow-trend-up text-success me-1"></i>
-                            <?php echo $film['popularity_score'] ?: 'N/A'; ?></div>
-                        <small class="text-muted" style="font-size: 0.75rem;">rank</small>
-                    </div>
-                    <div class="vr bg-secondary opacity-25 d-none d-md-block" style="height:50px;"></div>
-                    <div class="text-center">
-                        <div class="text-muted small text-uppercase fw-bold" style="letter-spacing: 1px;">IBIFF Status
-                        </div>
-                        <div class="h5 mb-0 fw-bold" style="color:var(--gold);"><i class="fas fa-award me-1"></i>
-                            <?php echo $film['festival_status'] ?: 'Selected'; ?></div>
-                        <small class="text-muted" style="font-size: 0.75rem;">Official</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Media Section (IMDb Style: Trailer + Poster) -->
-    <div class="container mb-5" data-aos="fade-up">
-        <div class="row g-1 bg-dark-custom p-2 rounded-3 shadow-lg">
-            <div class="col-lg-3 d-none d-lg-block">
-                <img src="<?php echo strpos($film['poster'], 'http') === 0 ? $film['poster'] : 'assets/uploads/posters/' . $film['poster']; ?>"
-                    onerror="this.src='https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=800'"
-                    class="img-fluid rounded-start w-100 h-100 object-fit-cover"
-                    alt="<?php echo $film['title']; ?> Poster">
-            </div>
-            <div class="col-lg-7">
-                <div class="ratio ratio-16x9 h-100 overflow-hidden bg-black position-relative">
-                    <?php if ($yt_id): ?>
-                        <iframe src="https://www.youtube.com/embed/<?php echo $yt_id; ?>?autoplay=0&rel=0"
-                            title="YouTube video" allowfullscreen></iframe>
-                    <?php else: ?>
-                        <!-- Fallback to Banner if no trailer -->
-                        <img src="<?php echo strpos($film['banner'], 'http') === 0 ? $film['banner'] : 'assets/uploads/films/' . $film['banner']; ?>"
-                            onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=1200'"
-                            class="w-100 h-100 object-fit-cover opacity-50" alt="Banner">
-                        <div class="position-absolute top-50 start-50 translate-middle text-center">
-                            <i class="fas fa-film fa-3x text-muted mb-2"></i>
-                            <p class="text-muted text-uppercase fw-bold letter-spacing-1 mb-0">Trailer Not Available</p>
-                        </div>
+                    <span>•</span>
+                    <span><?php echo $film['duration']; ?></span>
+                    <?php if (!empty($film['genre'])): ?>
+                        <span>•</span>
+                        <span class="text-gold"><?php echo $film['genre']; ?></span>
                     <?php endif; ?>
                 </div>
-            </div>
-            <div class="col-lg-2 d-none d-lg-flex flex-column gap-1">
-                <div class="flex-grow-1 bg-dark d-flex flex-column align-items-center justify-content-center rounded-top-end position-relative text-white cursor-pointer hover-overlay"
-                    style="min-height: 120px;">
-                    <i class="fas fa-play-circle fa-2x mb-2 text-muted"></i>
-                    <span class="small fw-bold letter-spacing-1">1 VIDEO</span>
-                </div>
-                <div class="flex-grow-1 bg-dark d-flex flex-column align-items-center justify-content-center rounded-bottom-end position-relative text-white cursor-pointer hover-overlay"
-                    style="min-height: 120px;">
-                    <i class="fas fa-image fa-2x mb-2 text-muted"></i>
-                    <span class="small fw-bold letter-spacing-1">PHOTOS</span>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Poster (Hidden on Desktop) -->
-        <div class="d-lg-none mt-3 row g-3">
-            <div class="col-4">
-                <img src="<?php echo strpos($film['poster'], 'http') === 0 ? $film['poster'] : 'assets/uploads/posters/' . $film['poster']; ?>"
-                    class="img-fluid rounded shadow" alt="Poster">
-            </div>
-            <div class="col-8 d-flex flex-column justify-content-center">
-                <h5 class="fw-bold"><?php echo $film['title']; ?></h5>
-                <span class="badge bg-danger align-self-start mb-2"><?php echo $film['genre']; ?></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Content Section -->
-    <div class="container">
-        <div class="row g-5">
-            <!-- Left Column: Details -->
-            <div class="col-lg-8" data-aos="fade-right">
-
-                <?php if (!empty($film['genre'])): ?>
-                    <div class="mb-3 d-flex flex-wrap gap-2">
-                        <?php
-                        $genres = explode(',', $film['genre']);
-                        foreach ($genres as $g):
-                            ?>
-                            <span
-                                class="badge rounded-pill border border-secondary text-white fw-normal px-3 py-2 bg-transparent"><?php echo trim($g); ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
 
                 <?php if (!empty($film['tagline'])): ?>
-                    <h5 class="fw-bold text-white mb-4 fst-italic" style="letter-spacing: 1px;">
-                        "<?php echo $film['tagline']; ?>"</h5>
+                    <p class="fs-5 fst-italic mb-0" style="color: #ccc;">"<?php echo htmlspecialchars($film['tagline']); ?>"</p>
                 <?php endif; ?>
-
-                <div class="mb-4">
-                    <p class="fs-5 text-light opacity-75" style="line-height: 1.8;">
-                        <?php echo nl2br($film['synopsis']); ?></p>
-                </div>
-
-                <hr class="border-secondary opacity-25 my-4">
-
-                <div class="crew-list">
-                    <div class="row align-items-start mb-3 pb-3 border-bottom border-secondary border-opacity-25">
-                        <div class="col-md-3 fw-bold text-white">Director</div>
-                        <div class="col-md-9 text-primary-light fw-bold">
-                            <a href="director-profile.php?name=<?php echo urlencode($film['director']); ?>"
-                                class="text-primary-light text-decoration-none border-bottom border-primary border-opacity-50 pb-1 hover-opacity">
-                                <?php echo $film['director']; ?>
-                            </a>
-                        </div>
-                    </div>
-                    <?php if (!empty($film['writers'])): ?>
-                        <div class="row align-items-start mb-3 pb-3 border-bottom border-secondary border-opacity-25">
-                            <div class="col-md-3 fw-bold text-white">Writers</div>
-                            <div class="col-md-9 text-primary-light"><?php echo $film['writers']; ?></div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($film['producer']): ?>
-                        <div class="row align-items-start mb-3 pb-3 border-bottom border-secondary border-opacity-25">
-                            <div class="col-md-3 fw-bold text-white">Producer</div>
-                            <div class="col-md-9 text-primary-light"><?php echo $film['producer']; ?></div>
-                        </div>
-                    <?php endif; ?>
-                    <div class="row align-items-start mb-3 pb-3 border-bottom border-secondary border-opacity-25">
-                        <div class="col-md-3 fw-bold text-white">Stars</div>
-                        <div class="col-md-9 text-primary-light"><?php echo $film['cast']; ?></div>
-                    </div>
-                </div>
-
-                <?php if ($film['awards']): ?>
-                    <div class="mt-5 bg-dark-custom p-4 rounded-3 border-start border-4 border-gold">
-                        <h5 class="text-gold fw-bold mb-3 text-uppercase" style="letter-spacing: 1px;"><i
-                                class="fas fa-trophy me-2"></i> Awards & Recognition</h5>
-                        <p class="mb-0 text-light opacity-75"><?php echo $film['awards']; ?></p>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- Right Column: Sidebar Info -->
-            <div class="col-lg-4" data-aos="fade-left">
-                <div class="bg-dark-custom p-4 rounded-3 border border-secondary border-opacity-25 mb-4">
-                    <h5 class="fw-bold text-uppercase mb-4 border-bottom border-secondary border-opacity-25 pb-3">
-                        Details</h5>
-
-                    <div class="mb-3">
-                        <span class="d-block text-muted small text-uppercase fw-bold">Country of Origin</span>
-                        <span class="text-white"><?php echo $film['country']; ?></span>
-                    </div>
-                    <div class="mb-3">
-                        <span class="d-block text-muted small text-uppercase fw-bold">Language</span>
-                        <span class="text-white"><?php echo $film['language']; ?></span>
-                    </div>
-                    <div class="mb-3">
-                        <span class="d-block text-muted small text-uppercase fw-bold">Runtime</span>
-                        <span class="text-white"><?php echo $film['duration']; ?></span>
-                    </div>
-                    <div class="mb-0">
-                        <span class="d-block text-muted small text-uppercase fw-bold">Official Selection</span>
-                        <span class="text-gold fw-bold">IBIFF India <?php echo $film['year']; ?></span>
-                    </div>
-                </div>
-
-                <!-- Add to Watchlist / Share (Mock functionality) -->
-                <button class="btn btn-outline-light w-100 py-3 mb-3 fw-bold"
-                    onclick="alert('Added to your festival schedule!')">
-                    <i class="fas fa-plus me-2"></i> Add to Schedule
-                </button>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-dark border border-secondary w-100"
-                        onclick="window.open('https://twitter.com/intent/tweet?text=Check out <?php echo urlencode($film['title']); ?> at IBIFF India!', '_blank')"><i
-                            class="fab fa-twitter"></i> Share</button>
-                    <button class="btn btn-dark border border-secondary w-100"
-                        onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!');"><i
-                            class="fas fa-link"></i> Copy</button>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    .bg-dark-custom {
-        background-color: #1a1a1a;
-    }
+<!-- Main Content Area -->
+<div class="container pb-5">
+    <div class="row g-5">
+        
+        <!-- Left Sidebar (Poster & Quick Stats) -->
+        <div class="col-lg-3 text-center text-lg-start">
+            <img src="<?php echo htmlspecialchars($posterUrl); ?>" class="film-poster mb-4 d-none d-lg-block" alt="Poster">
+            
+            <div class="bg-dark-glass p-4 rounded-4 mb-4 text-center">
+                <div class="d-flex justify-content-around align-items-center mb-3">
+                    <div>
+                        <div class="text-gold h3 mb-0 fw-bold"><i class="fas fa-star me-1"></i><?php echo $film['rating_score'] ?: '-'; ?></div>
+                        <div class="small text-muted text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">IMDb Rating</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div>
+                        <div class="text-white h3 mb-0 fw-bold"><i class="fas fa-fire text-danger me-1"></i><?php echo $film['popularity_score'] ?: '-'; ?></div>
+                        <div class="small text-muted text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">Popularity</div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-light w-100 rounded-pill text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.8rem;">
+                    <i class="fas fa-plus me-2"></i> Add to Watchlist
+                </button>
+            </div>
 
-    .text-primary-light {
-        color: #4da6ff;
-    }
+            <div class="mb-4">
+                <h6 class="text-uppercase text-muted fw-bold border-bottom border-secondary pb-2 mb-3" style="letter-spacing: 2px; font-size: 0.8rem;">Info</h6>
+                <div class="mb-2"><strong class="text-white">Director:</strong> <span class="text-gold"><?php echo htmlspecialchars($film['director']); ?></span></div>
+                <?php if($film['writers']): ?><div class="mb-2"><strong class="text-white">Writers:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['writers']); ?></span></div><?php endif; ?>
+                <?php if($film['country']): ?><div class="mb-2"><strong class="text-white">Country:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['country']); ?></span></div><?php endif; ?>
+                <?php if($film['language']): ?><div class="mb-2"><strong class="text-white">Language:</strong> <span style="color:#aaa;"><?php echo htmlspecialchars($film['language']); ?></span></div><?php endif; ?>
+            </div>
+        </div>
 
-    .text-gold {
-        color: #c9a84c;
-    }
+        <!-- Right Content (Trailer, Synopsis, Album) -->
+        <div class="col-lg-9 pt-lg-4">
+            
+            <!-- Trailer Section -->
+            <?php if ($yt_id): ?>
+                <div class="trailer-container mb-5 ratio ratio-21x9 bg-black">
+                    <iframe src="https://www.youtube.com/embed/<?php echo $yt_id; ?>?autoplay=0&rel=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            <?php elseif (!empty($yt_url)): ?>
+                <!-- Direct Video link fallback -->
+                <div class="trailer-container mb-5 ratio ratio-21x9 bg-black">
+                    <video controls class="w-100 h-100 object-fit-cover">
+                        <source src="<?php echo htmlspecialchars($yt_url); ?>" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            <?php endif; ?>
 
-    .border-gold {
-        border-color: #c9a84c !important;
-    }
+            <!-- Synopsis -->
+            <h4 class="text-uppercase fw-bold text-white mb-3" style="letter-spacing: 2px;">Synopsis</h4>
+            <p class="fs-5 mb-5" style="color: #b0b5c0; line-height: 1.8;">
+                <?php echo nl2br(htmlspecialchars($film['synopsis'])); ?>
+            </p>
 
-    .object-fit-cover {
-        object-fit: cover;
-    }
+            <?php if (!empty($film['cast'])): ?>
+                <h4 class="text-uppercase fw-bold text-white mb-3" style="letter-spacing: 2px;">Cast</h4>
+                <p class="fs-6 mb-5" style="color: #b0b5c0;">
+                    <?php echo htmlspecialchars($film['cast']); ?>
+                </p>
+            <?php endif; ?>
 
-    .letter-spacing-1 {
-        letter-spacing: 1px;
-    }
+            <!-- Photo Album Section -->
+            <?php if (!empty($album_photos)): ?>
+                <h4 class="text-uppercase fw-bold text-white mb-4 mt-5" style="letter-spacing: 2px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <i class="fas fa-images text-gold me-2"></i> Photo Gallery
+                </h4>
+                <div class="row g-3 mb-5">
+                    <?php foreach ($album_photos as $photo): ?>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <a href="<?php echo htmlspecialchars($photo); ?>" target="_blank">
+                                <img src="<?php echo htmlspecialchars($photo); ?>" class="album-img" alt="Film Scene">
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
-    .crew-list .row:last-child {
-        border-bottom: none !important;
-        padding-bottom: 0 !important;
-        margin-bottom: 0 !important;
-    }
-
-    .cursor-pointer {
-        cursor: pointer;
-    }
-
-    .hover-overlay {
-        transition: background-color 0.2s ease;
-    }
-
-    .hover-overlay:hover {
-        background-color: #2a2a2a !important;
-    }
-
-    .hover-opacity {
-        transition: opacity 0.2s;
-    }
-
-    .hover-opacity:hover {
-        opacity: 0.7;
-    }
-
-    .film-rating-bar .vr {
-        width: 1px;
-    }
-</style>
+        </div>
+    </div>
+</div>
 
 <?php require_once 'includes/footer.php'; ?>
