@@ -206,7 +206,7 @@ if ($db) {
     <form method="POST" enctype="multipart/form-data">
         <div class="card card-dark card-tabs">
             <div class="card-header p-0 pt-1">
-                <ul class="nav nav-tabs flex-nowrap" id="settingsTabs" role="tablist" style="overflow-x: auto; white-space: nowrap;">
+                <ul class="nav nav-tabs flex-wrap" id="settingsTabs" role="tablist">
                     <?php 
                     $sections = array_keys($settings);
                     $activeClass = 'active';
