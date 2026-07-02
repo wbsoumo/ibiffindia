@@ -74,6 +74,36 @@
                 prevEl: '.swiper-button-prev',
             },
         });
+
+        if (document.querySelector('.awardsSlider')) {
+            new Swiper('.awardsSlider', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                breakpoints: {
+                    576: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    992: {
+                        slidesPerView: 4,
+                        spaceBetween: 40,
+                    }
+                },
+                pagination: {
+                    el: '.awards-pagination',
+                    clickable: true,
+                }
+            });
+        }
     }
 </script>
 </body>

@@ -11,7 +11,7 @@ $errorMessage = '';
 // Handle Image Uploads
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['media'])) {
     $media_type = $_POST['media_type'] ?? '';
-    if (in_array($media_type, ['slider', 'moment', 'partner'])) {
+    if (in_array($media_type, ['slider', 'moment', 'partner', 'award'])) {
         $uploadDir = __DIR__ . '/../assets/uploads/homepage/';
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
@@ -70,7 +70,8 @@ if (isset($_GET['delete'])) {
 $media = [
     'slider' => [],
     'moment' => [],
-    'partner' => []
+    'partner' => [],
+    'award' => []
 ];
 
 if ($db) {
@@ -87,7 +88,7 @@ if ($db) {
     } catch (Exception $e) {
         $db->exec("CREATE TABLE IF NOT EXISTS homepage_media (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            media_type ENUM('slider', 'moment', 'partner') NOT NULL,
+            media_type VARCHAR(50) NOT NULL,
             file_path VARCHAR(255) NOT NULL,
             display_order INT DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -143,13 +144,21 @@ if ($db) {
                 <li class="nav-item">
                     <a class="nav-link" id="tab-partner" data-toggle="pill" href="#content-partner" role="tab">Proud Partners</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-award" data-toggle="pill" href="#content-award" role="tab">Official Honors (Awards)</a>
+                </li>
             </ul>
         </div>
         <div class="card-body">
             <div class="tab-content">
                 
                 <?php 
-                $types = ['slider' => 'Hero Slider', 'moment' => 'Moments & Memories', 'partner' => 'Proud Partners'];
+                $types = [
+                    'slider' => 'Hero Slider',
+                    'moment' => 'Moments & Memories',
+                    'partner' => 'Proud Partners',
+                    'award' => 'Official Honors (Awards)'
+                ];
                 $activeClass = 'show active';
                 foreach ($types as $typeKey => $typeLabel):
                 ?>

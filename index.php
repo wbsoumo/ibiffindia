@@ -18,7 +18,7 @@ if ($db) {
 }
 
 // Fetch Dynamic Homepage Media
-$homeMedia = ['slider' => [], 'moment' => [], 'partner' => []];
+$homeMedia = ['slider' => [], 'moment' => [], 'partner' => [], 'award' => []];
 if ($db) {
     try {
         $stmt = $db->query("SELECT * FROM homepage_media ORDER BY media_type, display_order ASC");
@@ -73,7 +73,7 @@ if ($db) {
             <!-- Left Column: Content -->
             <div class="col-lg-7 pe-lg-5" data-aos="fade-right">
                 <h2 class="welcome-title-large text-uppercase font-cinzel text-gradient-navy">
-                    CELEBRATING CROSS-BORDER CINEMA
+                    <?php echo htmlspecialchars(getSetting('welcome_title_large', 'CELEBRATING CROSS-BORDER CINEMA')); ?>
                 </h2>
                 
                 <div class="separator-line"></div>
@@ -94,18 +94,20 @@ if ($db) {
                 <!-- Festival Committee Info -->
                 <div class="committee-info mb-4 bg-light p-4 border rounded shadow-sm position-relative overflow-hidden">
                     <div style="position: absolute; right: -20px; bottom: -20px; font-size: 8rem; color: rgba(3,27,51,0.02); pointer-events: none; font-family: 'Cinzel', serif;">IBIFF</div>
-                    <h5 class="fw-bold text-navy mb-3 border-bottom pb-2 font-cinzel" style="font-size: 1.15rem; letter-spacing: 0.5px;">FESTIVAL MANAGEMENT</h5>
+                    <h5 class="fw-bold text-navy mb-3 border-bottom pb-2 font-cinzel" style="font-size: 1.15rem; letter-spacing: 0.5px;">
+                        <?php echo htmlspecialchars(getSetting('welcome_committee_title', 'FESTIVAL MANAGEMENT')); ?>
+                    </h5>
                     <p class="mb-2 text-dark d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-user-tie me-2 text-red"></i> <strong class="text-navy">Festival Chairman:</strong></span> 
-                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;">Sourav Chakraborty</span>
+                        <span><i class="fas fa-user-tie me-2 text-red"></i> <strong class="text-navy"><?php echo htmlspecialchars(getSetting('welcome_chairman_label', 'Festival Chairman')); ?>:</strong></span> 
+                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;"><?php echo htmlspecialchars(getSetting('welcome_chairman_name', 'Sourav Chakraborty')); ?></span>
                     </p>
                     <p class="mb-2 text-dark d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-user me-2 text-red"></i> <strong class="text-navy">Festival Director:</strong></span> 
-                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;">Raju Biswas</span>
+                        <span><i class="fas fa-user me-2 text-red"></i> <strong class="text-navy"><?php echo htmlspecialchars(getSetting('welcome_director_label', 'Festival Director')); ?>:</strong></span> 
+                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;"><?php echo htmlspecialchars(getSetting('welcome_director_name', 'Raju Biswas')); ?></span>
                     </p>
                     <p class="mb-2 text-dark d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-award me-2 text-red"></i> <strong class="text-navy">Chief Advisor:</strong></span> 
-                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;">Dr. Amit Chaudhuri</span>
+                        <span><i class="fas fa-award me-2 text-red"></i> <strong class="text-navy"><?php echo htmlspecialchars(getSetting('welcome_advisor_label', 'Chief Advisor')); ?>:</strong></span> 
+                        <span class="text-red font-barlow fw-bold" style="font-size: 1.05rem;"><?php echo htmlspecialchars(getSetting('welcome_advisor_name', 'Dr. Amit Chaudhuri')); ?></span>
                     </p>
                 </div>
 
@@ -460,7 +462,20 @@ if ($db) {
             
             <!-- Laurels Graphic Emblem -->
             <div class="laurels-emblem py-3">
-                <img src="assets/images/award-logo.png" alt="Award emblem" class="laurels-header-icon img-fluid" style="max-height: 200px;">
+                <?php if (!empty($homeMedia['award'])): ?>
+                    <div class="swiper awardsSlider" style="max-width: 900px; margin: 0 auto; overflow: hidden; padding-bottom: 30px;">
+                        <div class="swiper-wrapper align-items-center">
+                            <?php foreach ($homeMedia['award'] as $award): ?>
+                                <div class="swiper-slide text-center">
+                                    <img src="<?php echo htmlspecialchars($award['file_path']); ?>" alt="Award Logo" class="laurels-header-icon img-fluid" style="max-height: 160px; object-fit: contain;">
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="swiper-pagination awards-pagination"></div>
+                    </div>
+                <?php else: ?>
+                    <img src="assets/images/award-logo.png" alt="Award emblem" class="laurels-header-icon img-fluid" style="max-height: 200px;">
+                <?php endif; ?>
             </div>
         </div>
         

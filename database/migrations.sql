@@ -39,7 +39,15 @@ INSERT INTO site_settings (setting_key, setting_value, setting_type, setting_lab
 ('welcome_stat_1_val', '50+', 'text', 'Stat 1 Value (e.g. 50+)', 'Welcome'),
 ('welcome_stat_1_lbl', 'Categories', 'text', 'Stat 1 Label', 'Welcome'),
 ('welcome_stat_2_val', '200+', 'text', 'Stat 2 Value (e.g. 200+)', 'Welcome'),
-('welcome_stat_2_lbl', 'Selections', 'text', 'Stat 2 Label', 'Welcome');
+('welcome_stat_2_lbl', 'Selections', 'text', 'Stat 2 Label', 'Welcome'),
+('welcome_title_large', 'CELEBRATING CROSS-BORDER CINEMA', 'text', 'Welcome Section Large Heading', 'Welcome'),
+('welcome_committee_title', 'FESTIVAL MANAGEMENT', 'text', 'Committee Box Title', 'Welcome'),
+('welcome_chairman_label', 'Festival Chairman', 'text', 'Chairman Role Label', 'Welcome'),
+('welcome_chairman_name', 'Sourav Chakraborty', 'text', 'Chairman Name', 'Welcome'),
+('welcome_director_label', 'Festival Director', 'text', 'Director Role Label', 'Welcome'),
+('welcome_director_name', 'Raju Biswas', 'text', 'Director Name', 'Welcome'),
+('welcome_advisor_label', 'Chief Advisor', 'text', 'Advisor Role Label', 'Welcome'),
+('welcome_advisor_name', 'Dr. Amit Chaudhuri', 'text', 'Advisor Name', 'Welcome');
 
 -- Festival Highlights (IKSFF-like) Settings
 INSERT INTO site_settings (setting_key, setting_value, setting_type, setting_label, setting_section) VALUES
