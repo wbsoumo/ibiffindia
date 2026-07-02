@@ -163,6 +163,9 @@ if ($db) {
     
     // Group settings by section
     foreach ($allSettings as $setting) {
+        if ($setting['setting_section'] === 'Welcome') {
+            continue;
+        }
         $settings[$setting['setting_section']][] = $setting;
     }
 }

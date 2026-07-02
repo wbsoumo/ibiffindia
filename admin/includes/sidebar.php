@@ -56,6 +56,13 @@
         </li>
         
         <li class="nav-item">
+          <a href="<?php echo $basePath; ?>welcome_settings.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'welcome_settings.php' ? 'active bg-gold' : ''; ?>">
+            <i class="nav-icon fas fa-home"></i>
+            <p>Welcome Section</p>
+          </a>
+        </li>
+        
+        <li class="nav-item">
           <a href="<?php echo $basePath; ?>homepage_media.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'homepage_media.php' ? 'active bg-gold' : ''; ?>">
             <i class="nav-icon fas fa-photo-video"></i>
             <p>Homepage Media</p>
