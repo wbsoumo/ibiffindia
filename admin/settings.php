@@ -125,10 +125,6 @@ if ($db) {
             ['about_tagline', 'Bridging the cinematic gap between India and Bangladesh.', 'text', 'About Us Tagline', 'Page - About'],
             ['about_history_title', 'THE HEART OF IBIFF INDIA', 'text', 'History Title', 'Page - About'],
             ['about_history_text', 'Founded with a passion for storytelling...', 'textarea', 'History Text', 'Page - About'],
-            
-            ['slider_img_1', 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920', 'image', 'Slider Image 1', 'Page - Homepage'],
-            ['slider_img_2', 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1920', 'image', 'Slider Image 2', 'Page - Homepage'],
-            ['slider_img_3', 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1920', 'image', 'Slider Image 3', 'Page - Homepage'],
             ['submit_film_link', 'https://filmfreeway.com', 'text', 'Submit Film Button Link', 'Page - Homepage'],
             
             ['mission_tag', 'Our Vision', 'text', 'Vision Tag', 'Page - Homepage'],
@@ -154,13 +150,6 @@ if ($db) {
             ['moments_img_2', 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=600', 'image', 'Memory Photo 2', 'Page - Homepage'],
             ['moments_img_3', 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=600', 'image', 'Memory Photo 3', 'Page - Homepage'],
             ['moments_img_4', 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=600', 'image', 'Memory Photo 4', 'Page - Homepage'],
-            
-            ['partner_img_1', '', 'image', 'Partner Logo 1', 'Page - Homepage'],
-            ['partner_img_2', '', 'image', 'Partner Logo 2', 'Page - Homepage'],
-            ['partner_img_3', '', 'image', 'Partner Logo 3', 'Page - Homepage'],
-            ['partner_img_4', '', 'image', 'Partner Logo 4', 'Page - Homepage'],
-            ['partner_img_5', '', 'image', 'Partner Logo 5', 'Page - Homepage'],
-            ['partner_img_6', '', 'image', 'Partner Logo 6', 'Page - Homepage']
         ];
         $insertStmt = $db->prepare("INSERT IGNORE INTO site_settings (setting_key, setting_value, setting_type, setting_label, setting_section) VALUES (?, ?, ?, ?, ?)");
         foreach ($defaultSettings as $ds) {
