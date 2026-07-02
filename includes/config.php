@@ -4,7 +4,7 @@
  */
 
 // Database Configuration
-define('DB_HOST', '127.0.0.1');
+define('DB_HOST', 'localhost');
 define('DB_NAME', 'ibiffind_raju');
 define('DB_USER', 'ibiffind_raju');
 define('DB_PASS', 'GLCbRskADBy6WtHdYRD4');
