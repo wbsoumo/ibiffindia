@@ -664,13 +664,13 @@ if ($db) {
             ?>
             <div class="marquee-track">
                 <?php foreach($partners as $p): ?>
-                    <img src="<?php echo htmlspecialchars($p); ?>" alt="Partner" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                    <img src="<?php echo htmlspecialchars($p); ?>" alt="Partner" class="partner-logo" style="mix-blend-mode: multiply;">
                 <?php endforeach; ?>
             </div>
             <!-- Duplicate content for smooth infinite scrolling -->
             <div class="marquee-track">
                 <?php foreach($partners as $p): ?>
-                    <img src="<?php echo htmlspecialchars($p); ?>" alt="Partner" class="partner-logo" style="mix-blend-mode: multiply; filter: grayscale(100%);">
+                    <img src="<?php echo htmlspecialchars($p); ?>" alt="Partner" class="partner-logo" style="mix-blend-mode: multiply;">
                 <?php endforeach; ?>
             </div>
         </div>
