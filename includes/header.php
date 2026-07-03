@@ -1,4 +1,10 @@
 <?php 
+// Prevent browser and proxy caching of dynamic HTML content
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+
 require_once __DIR__ . '/config.php'; 
 require_once __DIR__ . '/db.php'; 
 require_once __DIR__ . '/functions.php'; 
@@ -36,7 +42,7 @@ $metaDesc = getSetting('meta_description', 'Ibiff India - Indo-Bangla Internatio
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=<?php echo time(); ?>">
     
     <!-- Favicon -->
     <link rel="icon" href="<?php echo htmlspecialchars($siteFavicon); ?>">
