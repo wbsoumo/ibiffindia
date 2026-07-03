@@ -74,6 +74,43 @@ if ($db) {
     $stmt = $db->prepare("SELECT * FROM site_settings WHERE setting_section = 'Welcome' ORDER BY id");
     $stmt->execute();
     $welcomeSettings = $stmt->fetchAll();
+
+    // Auto-seed missing Welcome settings if database doesn't have them
+    if (empty($welcomeSettings)) {
+        $defaultWelcome = [
+            ['welcome_tag', 'Welcome to', 'text', 'Welcome Section Tagline', 'Welcome'],
+            ['welcome_title', 'THE INTERNATIONAL INDO-BANGLA FILM FESTIVAL IBIFF INDIA', 'textarea', 'Welcome Section Main Title', 'Welcome'],
+            ['welcome_bullet_1', 'An internationally acclaimed platform celebrating independent cinema', 'text', 'Bullet Point 1', 'Welcome'],
+            ['welcome_bullet_2', 'A vibrant hybrid ecosystem connecting filmmakers, cinephiles, and creators', 'text', 'Bullet Point 2', 'Welcome'],
+            ['welcome_bullet_3', 'Diverse genres, formats, and storytelling styles encouraged', 'text', 'Bullet Point 3', 'Welcome'],
+            ['welcome_bullet_4', 'A festival rooted in creativity, collaboration, and cultural exchange', 'text', 'Bullet Point 4', 'Welcome'],
+            ['welcome_subheading', '8th International Indo-Bangla Film Festival (IBIFF) 2026!', 'text', 'Edition Subheading', 'Welcome'],
+            ['welcome_text', 'The International Indo-Bangla Film Festival (IBIFF) 2024 concluded successfully, marking yet another milestone in our journey of celebrating cinema from across the globe. We now look forward to the next edition — IBIFF 2026.', 'textarea', 'Welcome Description Text', 'Welcome'],
+            ['welcome_poster_title', 'IBIFF 2026 EDITION', 'text', 'Poster Card Title', 'Welcome'],
+            ['welcome_poster_image', 'assets/images/poster1.jpg', 'image', 'Welcome Poster Image', 'Welcome'],
+            ['welcome_stat_1_val', '50+', 'text', 'Stat 1 Value (e.g. 50+)', 'Welcome'],
+            ['welcome_stat_1_lbl', 'Categories', 'text', 'Stat 1 Label', 'Welcome'],
+            ['welcome_stat_2_val', '200+', 'text', 'Stat 2 Value (e.g. 200+)', 'Welcome'],
+            ['welcome_stat_2_lbl', 'Selections', 'text', 'Stat 2 Label', 'Welcome'],
+            ['welcome_title_large', 'CELEBRATING CROSS-BORDER CINEMA', 'text', 'Welcome Section Large Heading', 'Welcome'],
+            ['welcome_committee_title', 'FESTIVAL MANAGEMENT', 'text', 'Committee Box Title', 'Welcome'],
+            ['welcome_chairman_label', 'Festival Chairman', 'text', 'Chairman Role Label', 'Welcome'],
+            ['welcome_chairman_name', 'Sourav Chakraborty', 'text', 'Chairman Name', 'Welcome'],
+            ['welcome_director_label', 'Festival Director', 'text', 'Director Role Label', 'Welcome'],
+            ['welcome_director_name', 'Raju Biswas', 'text', 'Director Name', 'Welcome'],
+            ['welcome_advisor_label', 'Chief Advisor', 'text', 'Advisor Role Label', 'Welcome'],
+            ['welcome_advisor_name', 'Dr. Amit Chaudhuri', 'text', 'Advisor Name', 'Welcome']
+        ];
+
+        $insertStmt = $db->prepare("INSERT IGNORE INTO site_settings (setting_key, setting_value, setting_type, setting_label, setting_section) VALUES (?, ?, ?, ?, ?)");
+        foreach ($defaultWelcome as $ds) {
+            $insertStmt->execute($ds);
+        }
+
+        // Fetch settings again after seeding
+        $stmt->execute();
+        $welcomeSettings = $stmt->fetchAll();
+    }
 }
 ?>
 
