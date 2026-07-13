@@ -97,11 +97,23 @@ $media = [
 
 if ($db) {
     try {
+        // Ensure media_type is VARCHAR(50) to support 'award' type (fixes old ENUM columns in existing databases)
+        $db->exec("ALTER TABLE homepage_media MODIFY COLUMN media_type VARCHAR(50) NOT NULL");
+        
+        // Recover any records saved with empty/invalid type due to ENUM restrictions
+        $db->exec("UPDATE homepage_media SET media_type = 'award' WHERE media_type = '' OR media_type = '0' OR media_type IS NULL");
+    } catch (Exception $e) {
+        // Ignore errors if the table doesn't exist yet (it will be created below)
+    }
+
+    try {
         $stmt = $db->query("SELECT * FROM homepage_media ORDER BY media_type, display_order ASC");
         if ($stmt) {
             $allMedia = $stmt->fetchAll();
             foreach ($allMedia as $item) {
-                $media[$item['media_type']][] = $item;
+                if (isset($media[$item['media_type']])) {
+                    $media[$item['media_type']][] = $item;
+                }
             }
         } else {
             throw new Exception("Query failed or table missing");
