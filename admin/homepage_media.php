@@ -24,8 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['media'])) {
         $orderStmt->execute([$media_type]);
         $maxOrder = (int)$orderStmt->fetchColumn();
 
+        $uploadedCount = 0;
+        $errors = [];
+
         foreach ($_FILES['media']['tmp_name'] as $key => $tmpName) {
-            if (!empty($tmpName) && $_FILES['media']['error'][$key] === UPLOAD_ERR_OK) {
+            if (!empty($tmpName)) {
+                if ($_FILES['media']['error'][$key] !== UPLOAD_ERR_OK) {
+                    $errors[] = "File upload error code: " . $_FILES['media']['error'][$key];
+                    continue;
+                }
+
                 $fileName = $_FILES['media']['name'][$key];
                 $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
                 $allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
@@ -38,11 +46,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['media'])) {
                         $maxOrder++;
                         $dbPath = 'assets/uploads/homepage/' . $newFileName;
                         $stmtImg->execute([$media_type, $dbPath, $maxOrder]);
+                        $uploadedCount++;
+                    } else {
+                        $errors[] = "Failed to write file '$fileName' to directory assets/uploads/homepage/. Please check folder permissions.";
                     }
+                } else {
+                    $errors[] = "Invalid file extension for '$fileName'. Allowed types: JPG, JPEG, PNG, WEBP, GIF.";
                 }
             }
         }
-        $successMessage = ucfirst($media_type) . " media uploaded successfully!";
+
+        if ($uploadedCount > 0) {
+            $successMessage = $uploadedCount . " " . ucfirst($media_type) . " media uploaded successfully!";
+            if (!empty($errors)) {
+                $errorMessage = "Some files had errors: " . implode(" | ", $errors);
+            }
+        } else {
+            $errorMessage = "Upload failed: " . (empty($errors) ? "No file selected or empty file uploaded." : implode(" | ", $errors));
+        }
     }
 }
 
@@ -128,7 +149,16 @@ if ($db) {
     <?php if (!empty($successMessage)): ?>
         <div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <i class="icon fas fa-check"></i> <?php echo $successMessage; ?>
+            <h5><i class="icon fas fa-check"></i> Success!</h5>
+            <?php echo $successMessage; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($errorMessage)): ?>
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-ban"></i> Error!</h5>
+            <?php echo $errorMessage; ?>
         </div>
     <?php endif; ?>
 
@@ -180,7 +210,7 @@ if ($db) {
                     <ul class="sortable-grid" data-type="<?php echo $typeKey; ?>">
                         <?php foreach ($media[$typeKey] as $m): ?>
                         <li id="media_<?php echo $m['id']; ?>">
-                            <img src="<?php echo htmlspecialchars('../' . $m['file_path']); ?>" alt="Media">
+                            <img src="<?php echo (strpos($m['file_path'], 'http://') === 0 || strpos($m['file_path'], 'https://') === 0) ? htmlspecialchars($m['file_path']) : htmlspecialchars('../' . $m['file_path']); ?>" alt="Media">
                             <a href="homepage_media.php?delete=<?php echo $m['id']; ?>" class="btn btn-danger btn-sm btn-delete" onclick="return confirm('Are you sure you want to delete this image?');"><i class="fas fa-times"></i></a>
                         </li>
                         <?php endforeach; ?>

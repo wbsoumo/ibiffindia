@@ -463,18 +463,26 @@ if ($db) {
             <!-- Laurels Graphic Emblem -->
             <div class="laurels-emblem py-3">
                 <?php if (!empty($homeMedia['award'])): ?>
-                    <div class="swiper awardsSlider" style="max-width: 900px; margin: 0 auto; overflow: hidden; padding-bottom: 30px;">
-                        <div class="swiper-wrapper align-items-center">
-                            <?php foreach ($homeMedia['award'] as $award): ?>
-                                <div class="swiper-slide text-center">
-                                    <img src="<?php echo htmlspecialchars($award['file_path']); ?>" alt="Award Logo" class="laurels-header-icon img-fluid" style="max-height: 160px; object-fit: contain;">
-                                </div>
-                            <?php endforeach; ?>
+                    <?php if (count($homeMedia['award']) === 1): ?>
+                        <div class="text-center">
+                            <img src="<?php echo htmlspecialchars($homeMedia['award'][0]['file_path']); ?>" alt="Award emblem" class="laurels-header-icon img-fluid" style="max-height: 200px; object-fit: contain;">
                         </div>
-                        <div class="swiper-pagination awards-pagination"></div>
-                    </div>
+                    <?php else: ?>
+                        <div class="swiper awardsSlider" style="max-width: 900px; margin: 0 auto; overflow: hidden; padding-bottom: 30px;">
+                            <div class="swiper-wrapper align-items-center">
+                                <?php foreach ($homeMedia['award'] as $award): ?>
+                                    <div class="swiper-slide text-center">
+                                        <img src="<?php echo htmlspecialchars($award['file_path']); ?>" alt="Award Logo" class="laurels-header-icon img-fluid" style="max-height: 160px; object-fit: contain;">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="swiper-pagination awards-pagination"></div>
+                        </div>
+                    <?php endif; ?>
                 <?php else: ?>
-                    <img src="assets/images/award-logo.png" alt="Award emblem" class="laurels-header-icon img-fluid" style="max-height: 200px;">
+                    <div class="text-center">
+                        <img src="assets/images/award-logo.png" alt="Award emblem" class="laurels-header-icon img-fluid" style="max-height: 200px;">
+                    </div>
                 <?php endif; ?>
             </div>
         </div>

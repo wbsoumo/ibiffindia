@@ -75,26 +75,28 @@
             },
         });
 
-        if (document.querySelector('.awardsSlider')) {
+        var awardsSliderEl = document.querySelector('.awardsSlider');
+        if (awardsSliderEl) {
+            var slideCount = awardsSliderEl.querySelectorAll('.swiper-slide').length;
             new Swiper('.awardsSlider', {
                 slidesPerView: 1,
                 spaceBetween: 20,
-                loop: true,
-                autoplay: {
+                loop: slideCount > 1,
+                autoplay: slideCount > 1 ? {
                     delay: 3000,
                     disableOnInteraction: false,
-                },
+                } : false,
                 breakpoints: {
                     576: {
-                        slidesPerView: 2,
+                        slidesPerView: Math.min(slideCount, 2),
                         spaceBetween: 20,
                     },
                     768: {
-                        slidesPerView: 3,
+                        slidesPerView: Math.min(slideCount, 3),
                         spaceBetween: 30,
                     },
                     992: {
-                        slidesPerView: 4,
+                        slidesPerView: Math.min(slideCount, 4),
                         spaceBetween: 40,
                     }
                 },
