@@ -82,8 +82,7 @@ if (isset($_GET['delete'])) {
         $db->prepare("DELETE FROM homepage_media WHERE id = ?")->execute([$id]);
         $successMessage = "Media deleted successfully!";
         // Redirect to clear URL params
-        header("Location: homepage_media.php");
-        exit();
+        redirect("homepage_media.php");
     }
 }
 
