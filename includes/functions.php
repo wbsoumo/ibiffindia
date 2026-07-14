@@ -11,6 +11,8 @@ function sanitize($data) {
 }
 
 /**
+ * Redirect to a specific URL
+ */
 function redirect($url) {
     if (!headers_sent()) {
         header("Location: $url");
